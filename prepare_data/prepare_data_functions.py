@@ -13,6 +13,12 @@ from email import encoders
 
 logger = logging.getLogger(__name__)
 
+'''
+This function gets the pointer paths of the patients from the cim directory
+Input:  cim_dir = directory of the cim we want to get paths to the image pointers for
+
+Output: ptr_files = paths to the image pointer files
+'''
 def get_pointer_paths(cim_dir):
     patient_folders = os.listdir(cim_dir)
     ptr_files = []
@@ -32,6 +38,11 @@ def get_pointer_paths(cim_dir):
     
     return ptr_files
 
+'''
+This function calculates the time elapsed
+Input:  start = start time
+Output: hrs, mins, secs = time elapsed in hours, minutes, seconds format
+'''
 def calculate_time_elapsed(start):
     end = time()
     hrs = (end-start)//60//60
@@ -40,8 +51,12 @@ def calculate_time_elapsed(start):
 
     return hrs, mins, secs
 
+'''
+This function logs info level messages and prints them
+Input:  output_messages = string/strings(as list) of messages
+'''
 def log_and_print(output_messages):
-    if isinstance(output_messages, str):
+    if isinstance(output_messages, str):    #if output message is a single string
         logger.info(output_messages)
         print(output_messages)
     else:    
@@ -49,8 +64,12 @@ def log_and_print(output_messages):
             logger.info(message)
             print(message)
 
+'''
+This function logs error level messages and prints them
+Input:  output_messages = string/strings(as list) of messages
+'''
 def log_error_and_print(output_messages):
-    if isinstance(output_messages, str):
+    if isinstance(output_messages, str):    #if output message is a single string
         logger.error(output_messages)
         print(output_messages)
     else:    
@@ -58,6 +77,13 @@ def log_error_and_print(output_messages):
             logger.error(message)
             print(message)
 
+'''
+This function gets the cim path of the patient
+Inputs:  patient_name = name of patient from dicom header (with underscore)
+        cim_patients = paths to the cim patients folder
+
+Output: cim_path = returns the path to the cim (Format MODEL/CIM_PATIENT_NAME)
+'''
 def get_cim_path(patient_name, cim_patients):
     if patient_name != "4J_Y5_B5__XN":  #unique case where this patient has two underscores
         cim_ptr_path = [p for p in cim_patients if patient_name.replace("_Bio", "").lower() in p.lower()][0] #get the cim path of current patient
@@ -69,6 +95,13 @@ def get_cim_path(patient_name, cim_patients):
 
     return cim_path
 
+'''
+This functions puts all the paths of the cim patients in a list
+Inputs:  cim_dir = directory to the cim models
+        cim_models = name of the folders of the cim models
+
+Output: cim_patients = list of all cim patient paths 
+'''
 def get_cim_patients(cim_dir, cim_models):
     # put the paths of the models in a list
     cim_models_paths = [os.path.join(cim_dir, d) for d in os.listdir(cim_dir) if d in cim_models]
@@ -79,11 +112,25 @@ def get_cim_patients(cim_dir, cim_models):
     
     return cim_patients
 
+'''
+This function gets the slices (e.g. 0 1 2) from a pointer
+Input:  ptr_content = content of the current pointer (can read using np.genfromtxt)
+
+Output: slices = the slices as a np.array 
+'''
 def get_slices(ptr_content):
     slice_condition = np.logical_and(ptr_content["series"] == 0, ptr_content["index"] == 0) #condition to get only one frame for each slice
     slices = ptr_content[slice_condition]["slice"]
     return slices
 
+'''
+This function is used to send an email together with the log file (google server)
+Input:  from_addr = email address you want to use to send the email (have to allow low level software - google how to do this)
+        to_addr = email address you're sending the email to
+        subject = subject of the email
+        message = body of the email
+        filepath = filepath to the log file
+'''
 def sendemail(from_addr, to_addr, subject, message, filepath):
     msg = MIMEMultipart()
 
