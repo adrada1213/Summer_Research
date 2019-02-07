@@ -20,25 +20,19 @@ import numpy as np
 	
 # Read the file
 # filepath = '/mnt/cube/edward-playground/ukb_tagging/data_sequence_original'
-filepath = 'E:\\MR-tagging\\dataset-localNet\\data_sequence_original'
+filepath = 'E:\\cine-machine-learning\\dataset'
 
 # training_file = 'dataset-train.noresize.h5'
 # input_patterns = ['CIM_DATA_EL1','CIM_DATA_EL2']
 # val_patterns = ['CIM_D']
 # validation_file = 'dataset-train.noresize.h5'
 
-input_patterns = ['CIM_D']
-
-testdata_mapfile = 'dataset_test_mapping.h5'
-
-
+uk_biobank_h5_file = "UK_Biobank.h5"
 use_random_split = True
-test_ratio = 0.2 # test ratio is a fraction of the whole data
-train_ratio = 0.8 # train ratio is a fraction of the (whole_data - test_data)
 
 # Image and output size
 img_size = 256
-output_size = 4
+output_size = 3
 bbox_adjustment = 0.3
 
 # Hyperparameters optimisation variables
@@ -60,29 +54,25 @@ def model_summary():
     slim.model_analyzer.analyze_vars(model_vars, print_info=True)
 
 # --- Wrapper functions for the tf.dataset input pipeline ---
-def _training_data_load_wrapper(fpath, idx):
+def _training_data_load_wrapper(fpath, group, idx):
     # print('wrapper', idx)
-    return tf.py_func(func=mf._load_hd5_img_and_bbox_from_sequence, 
-        inp=[fpath, idx], Tout=[tf.float32, tf.float32])
+    return tf.py_func(func=mf._load_hd5_img_and_centroid_from_sequence, 
+        inp=[fpath, group, idx], Tout=[tf.float32, tf.float32])
 
 def _augmentation_wrapper(img, coords):
-    return tf.py_func(func=mf._rotate_img_and_bbox, 
+    return tf.py_func(func=mf._rotate_img_and_centroid, 
         inp=[img, coords], Tout=[tf.float32, tf.float32])
-
-def _adjust_bbox_wrapper(img, coords):
-    return tf.py_func(func=mf._adjust_bounding_box, 
-        inp=[img, coords, bbox_adjustment], Tout=[tf.float32, tf.float32])
 
 def _resize_function(img, coords):
     img = tf.reshape(img, [256, 256])
-    coords = tf.reshape(coords, [4])
+    coords = tf.reshape(coords, [3])
     return img, coords
 # --- end of wrapper functions ---
 
 def create_summary(model_name, name, value):
     tf.summary.scalar('{}/{}'.format(model_name,name), value)
 
-def bbox_iou_corner_xy(bboxes1, bboxes2):
+def bbox_iou_corner_xy(centroids1, centroids2):
     """
     Calculate Accuracy (IoU)
 
@@ -102,9 +92,18 @@ def bbox_iou_corner_xy(bboxes1, bboxes2):
         in [i, j].
     """
     epsilon = 0.0001
+    centre_x1, centre_y1, edge_lengths1 = tf.split(centroids1, 3, axis=1)
+    centre_x2, centre_y2, edge_lengths2 = tf.split(centroids2, 3, axis=1)
 
-    x11, y11, x12, y12 = tf.split(bboxes1, 4, axis=1)
-    x21, y21, x22, y22 = tf.split(bboxes2, 4, axis=1)
+    x11 = tf.add_n([centre_x1, -edge_lengths1])
+    y11 = tf.add_n([centre_y1, -edge_lengths1])
+    x12 = tf.add_n([centre_x1, edge_lengths1])
+    y12 = tf.add_n([centre_y1, edge_lengths1])
+
+    x21 = tf.add_n([centre_x2, -edge_lengths2])
+    y21 = tf.add_n([centre_y2, -edge_lengths2])
+    x22 = tf.add_n([centre_x2, edge_lengths2])
+    y22 = tf.add_n([centre_y2, edge_lengths2])
 
     xI1 = tf.maximum(x11, x21)
     xI2 = tf.minimum(x12, x22)
@@ -112,7 +111,9 @@ def bbox_iou_corner_xy(bboxes1, bboxes2):
     yI1 = tf.maximum(y11, y21)
     yI2 = tf.minimum(y12, y22)
 
-    inter_area = (xI1 - xI2) * (yI1 -yI2)
+    #inter_area = (xI1 - xI2) * (yI1 -yI2)
+
+    inter_area = (xI2 - xI1) * (yI2 -yI1)
 
     bboxes1_area = (x12 - x11) * (y12 - y11)
     bboxes2_area = (x22 - x21) * (y22 - y21)
@@ -128,9 +129,9 @@ def bbox_iou_corner_xy(bboxes1, bboxes2):
     This function accepts a list of filenames with index to read
     The _training_data_load_wrapper will read the filename-index pair and load the data
 '''
-def initialize_dataset(all_files, indexes, training=False):
+def initialize_dataset(filepaths, groups, indices, training=False):
     
-    ds = tf.data.Dataset.from_tensor_slices((all_files, indexes))
+    ds = tf.data.Dataset.from_tensor_slices((filepaths, groups, indices))
 
     if training:
         ds = ds.shuffle(1000)
@@ -156,32 +157,16 @@ def initialize_dataset(all_files, indexes, training=False):
     next_element = it.get_next()
     return next_element
 
-def initialize_dataset_from_map(dataset: dm.DataMappingSet, training=False):
-    return initialize_dataset(dataset.filepaths, dataset.indexes, training)
-
-# Create the mapping
-# all_files, indexes = build_filemap(filepath, input_patterns)
-# print('Total training data:', len(all_files))
-# # read from a separate validation file
-# pat_val, X_validate1, X_validate2, Y_validate = dl.prepare_input_set(filepath, validation_file)
+def initialize_dataset_from_map(dataset: dm.DataMappingSet, training):
+    return initialize_dataset(dataset.filepaths, dataset.groups, dataset.indices, training)
 
 # -- Data input prep --
 print('\n-------------------------------------------')
-# Cause we have multiple hd5 file, we need to create a mapping between filepath, and index, so the tf.Dataset can read it easily later
-if use_random_split:
-    print('Use random split on whole dataset')
-    dataset_dict, test_dict = dm.split_dataset_randomly(filepath, input_patterns, testdata_mapfile, test_ratio, train_ratio)
-    train_set = dataset_dict['train']
-    validation_set = dataset_dict['validate']
 
-else:
-    print('Use input and validation patterns')
-    train_files, train_patients, train_indexes = dm.build_filemap(filepath, input_patterns)
-    validate_files, validate_patients, validate_indexes = dm.build_filemap(filepath, val_patterns)
 
-    train_set = dm.DataMappingSet(train_patients, train_files, train_indexes)
-    validation_set = dm.DataMappingSet(validate_patients, validate_files, validate_indexes)
-    dataset_dict = {'train': train_set, 'validate': validation_set}
+dataset_dict, test_dict = dm.load_all_datasets(filepath, uk_biobank_h5_file)
+train_set = dataset_dict["train"]
+validation_set = dataset_dict["validate"]
 
 total_batch = int(train_set.count() / batch_size)
 validation_batch = math.ceil(validation_set.count() / val_batch_size)
@@ -225,7 +210,7 @@ training_model_path = "{}/train/{}".format(model_dir, model_name)
 
 
 # Loss and training function
-iou = bbox_iou_corner_xy(bboxes1=y, bboxes2=y_)
+iou = bbox_iou_corner_xy(centroids1=y, centroids2=y_)
 iou = tf.identity(iou, name="iou")
 
 loss = tf.losses.mean_squared_error(labels=y, predictions=y_)
@@ -262,7 +247,7 @@ with tf.Session() as sess:
     merged = tf.summary.merge_all()
     train_writer = tf.summary.FileWriter(model_dir+'/tensorboard/train', sess.graph)
     val_writer = tf.summary.FileWriter(model_dir+'/tensorboard/validation')
-
+    '''
     # save data mapping
     if use_random_split:
         if not os.path.isfile(os.path.join(filepath, testdata_mapfile)):
@@ -273,7 +258,7 @@ with tf.Session() as sess:
     # In any case, always save the whole splitted cases in the model directory
     print('\nSaving all case split into:', model_dir)
     dm.save_dataset_mapping(model_dir, dataset_dict)
-
+    '''
     # total_batch = int(len(all_files) / batch_size)
     # print('Total batch', total_batch)
     print("Starting the training for bounding_box corners at {}".format(time.ctime()))
@@ -375,3 +360,7 @@ with tf.Session() as sess:
     print("\nTraining for bounding box complete!")
     print("Total time taken for training: ", (time.time() - start_time), " seconds.")
     print("Finished at ", time.ctime())
+
+    os.system("predict_localisation_bbox.py")
+
+    os.system("shutdown -L")

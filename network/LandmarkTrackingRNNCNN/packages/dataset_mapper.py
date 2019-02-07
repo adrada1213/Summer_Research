@@ -5,12 +5,14 @@ import numpy as np
 class DataMappingSet:
     filepaths = []
     groups = []
-    indexes = []
+    indices = []
+    es_indices = []
     
-    def __init__(self, filepaths, groups, indices):
+    def __init__(self, filepaths, groups, indices, es_indices):
         self.groups = groups
         self.filepaths = filepaths
         self.indices = indices
+        self.es_indices = es_indices
 
     def count(self):
         return len(self.filepaths)
@@ -32,13 +34,31 @@ def save_dataset_mapping(save_path, dataset_dict, filename='dataset_mapping.h5')
 def load_group(group, h5_file):
     with h5py.File(h5_file, 'r') as hf:
         grp = hf["//{}".format(group)]
-        length = len(grp["patients"])
+        grp_cine = grp["//cine"]
+        # load the es indices
+        es_indices = grp_cine.get("es_indices")
     
-    filepaths = [h5_file]*length
-    groups = [group]*length
+    # number of patients should be equal to the number of es indices
+    length = len(es_indices)
+
+    # create an array of indices (for h5 file mapping)
     indices = np.arange(length)
 
-    return np.array(filepaths), np.array(groups), indices
+    # find the indices of the es_indices with a value of -1
+    neg_es = np.argwhere(es_indices<0)
+
+    # delete the indices of those es_indices (with value of -1) from the array of indices (lol)
+    indices = np.delete(indices, neg_es)
+    es_indices = np.delete(es_indices, neg_es)
+
+    # calculate new length
+    new_length = len(indices)
+
+    # create array of filepaths and groups (for h5 file mapping)
+    filepaths = [h5_file]*new_length
+    groups = [group]*new_length
+
+    return np.array(filepaths), np.array(groups), indices, es_indices
 
 def load_all_datasets(filepath, h5_filename):
     h5_file = os.path.join(filepath, h5_filename)

@@ -28,41 +28,7 @@ def get_dimensions(image, h_, w_):
     w_diff = w_-w
 
     return h, w, h_diff, w_diff
-'''
-def resize_cine(image, shape):
-    
-    Pads and crops image to the specified shape
-    TODO: Fix up weird indexing, which is only used so that image can also be an array of images
-    
-    pad = np.zeros( [len(image.shape), 2], np.int32 )
-    crop = np.zeros( [2, 2], np.int32 )
 
-    diff_shape = np.array( shape ) - image.shape[-2:]
-
-    top = diff_shape[0] // 2
-    bottom = diff_shape[0] - top
-
-    if bottom > 0:
-        pad[-2, 0] = top
-        pad[-2, 1] = bottom
-    else:
-        crop[0, 0] = -top
-        crop[0, 1] = -bottom
-
-    left = diff_shape[1] // 2
-    right = diff_shape[1] - left
-    if right > 0:
-        pad[-1, 0] = left
-        pad[-1, 1] = right
-    else:
-        crop[1, 0] = -left
-        crop[1, 1] = -right
-
-    image = np.pad( image, pad, mode = 'constant', constant_values = 0 )
-    image = image[..., crop[0,0]:image.shape[-2]-crop[0,1],crop[1,0]:image.shape[-1]-crop[1,1]]
-
-    return image
-'''
 def view_images(cine_img, tagged_img):
     # overlap the two images
     overlap = cv2.addWeighted(cine_img, 0.5, tagged_img, 1, 0)

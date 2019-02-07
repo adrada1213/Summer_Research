@@ -6,7 +6,7 @@ import h5py
 import os
 
 class LocalisationNetwork:
-    output_size = 4
+    output_size = 3
     session = None
     bbox_adjustment = 0.0 # not needed anymore to be adjusted, ground truth was already adjusted
 
@@ -26,7 +26,7 @@ class LocalisationNetwork:
             self.session = tf.Session()
 
         print('Restoring model {}'.format(model_name))
-        new_saver = tf.train.import_meta_graph('{}/{}.meta'.format(model_dir, model_name))
+        new_saver = tf.train.import_meta_graph('{}\\{}.meta'.format(model_dir, model_name))
         new_saver.restore(self.session, tf.train.latest_checkpoint(model_dir))
         
         # restore the tensors
@@ -60,8 +60,8 @@ class LocalisationNetwork:
         if (input_file.endswith('.h5')):
             new_filename = input_file[:-3] # strip the .h5
 
-        output_filename = '{}.bbox.h5'.format(new_filename)
-        print('Saving prediction as {}...'.format(output_filename))
+        output_filename = '{}.result.h5'.format(new_filename)
+        print('Saving predictions in {}...'.format(output_filename))
         save_result(output_path, output_filename, points)
         print('Prediction saved!')
     
@@ -69,7 +69,7 @@ class LocalisationNetwork:
         # make sure the data are in correct shape
         X_data = data_x
         Y_data = data_y
-        Y_data = adjust_bounding_box(Y_data, self.bbox_adjustment)
+        #Y_data = adjust_bounding_box(Y_data, self.bbox_adjustment)
         reshaped_labels = np.reshape(Y_data, [-1, self.output_size])
 
         # --- do the prediction here ---
@@ -113,8 +113,14 @@ def save_result(output_path, filename, coords):
     if not os.path.isdir(output_path):
         os.makedirs(output_path)
 
-    with h5py.File(os.path.join(output_path, filename), 'w') as hf:
-        hf.create_dataset("bbox_preds", data=coords)
+    if not os.path.isfile(os.path.join(output_path, filename)):
+        with h5py.File(os.path.join(output_path, filename), 'w') as hf:
+            hf.create_dataset("centroid_preds", data=coords, maxshape = (None, 3))
+    
+    else:
+        with h5py.File(os.path.join(output_path, filename), 'a') as hf:
+            hf["centroid_preds"].resize((hf["centroid_preds"].shape[0])+coords.shape[0], axis = 0)
+            hf["centroid_preds"][-coords.shape[0]:] = coords
 
 def adjust_bounding_box(arr, adjustment_fraction = 0):
     if adjustment_fraction == 0:

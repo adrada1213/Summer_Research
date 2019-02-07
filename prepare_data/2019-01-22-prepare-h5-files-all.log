@@ -1,0 +1,458 @@
+INFO:prepare_data_functions:====================STARTING MAIN PROGRAM====================
+INFO:prepare_data_functions:Operation started at 17:31:30.834499
+INFO:prepare_data_functions:h5 file will be stored in C:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\h5_files
+INFO:prepare_data_functions:Output filename: UK_Biobank.h5
+INFO:prepare_data_functions:Creating h5 file from 4086 pointer files
+
+INFO:prepare_data_functions:Shuffling data...
+INFO:prepare_data_functions:Obtaining data for train set
+INFO:prepare_data_functions:No landmark coordinates for patient HU_JT_NP_34
+INFO:prepare_data_functions:No landmark coordinates for patient HB_77_3Y_5K_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient Q8_PY_PX_2S
+INFO:prepare_data_functions:No landmark coordinates for patient 8K_QJ_ZD_37_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient QC_NA_B3_Q5
+INFO:prepare_data_functions:No landmark coordinates for patient CA_25_N9_4F_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient QH_D5_4Y_3E_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HU_C2_CH_MJ_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4Q_UZ_3F_56_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient TV_S9_HX_6P_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HP_K7_75_J7
+INFO:prepare_data_functions:No landmark coordinates for patient 4Q_MA_2J_F2_Bio
+INFO:prepare_data_functions:No contours found. PatID: NZEXCXCH Folder ID: 5145975
+INFO:prepare_data_functions:No landmark coordinates for patient 23_M8_VF_2C_Bio
+INFO:prepare_data_functions:No contours found. PatID: JQA2PB78 Folder ID: 3032394
+INFO:prepare_data_functions:No contours found. PatID: 8K68JQM9 Folder ID: 3308203
+INFO:prepare_data_functions:No landmark coordinates for patient Q8_FE_PV_4A_Bio
+ERROR:prepare_data_functions:Patient C6_P5_A5_UM has duplicate slice names
+INFO:prepare_data_functions:No contours found. PatID: VDA27HZE Folder ID: 1016118
+INFO:prepare_data_functions:No contours found. PatID: Q8FBYSN7 Folder ID: 1946628
+INFO:prepare_data_functions:No contours found. PatID: HZF4S832 Folder ID: 4653349
+INFO:prepare_data_functions:No landmark coordinates for patient VM_3D_CB_2N_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient QJ_XT_X3_MM
+INFO:prepare_data_functions:No landmark coordinates for patient 48_NJ_A4_M9
+INFO:prepare_data_functions:No landmark coordinates for patient CT_BH_CS_NT_Bio
+INFO:prepare_data_functions:No contours found. PatID: YS6EDT3K Folder ID: 4770113
+INFO:prepare_data_functions:No landmark coordinates for patient HU_8X_JZ_97
+INFO:prepare_data_functions:No landmark coordinates for patient 8K_J7_Y7_MV_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CT_FY_7E_4H_Bio
+ERROR:prepare_data_functions:Missing zip file. PatID: CYJ6FMKH FolderID: 1419817
+INFO:prepare_data_functions:No landmark coordinates for patient HP_3M_VE_9F
+INFO:prepare_data_functions:No landmark coordinates for patient HF_NV_NP_7Q_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient QC_HJ_AQ_NA_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JU_X7_T2_9F
+INFO:prepare_data_functions:No landmark coordinates for patient JP_CX_EA_CV
+ERROR:prepare_data_functions:Duplicate slice! Patient: CE_ZE_KQ_F9_Bio, CIM_Path: CIM_DATA_EL1\CE_ZE_KQ_F9_Bio_EL, h5 filename: C:\Users\arad572\Documents\MR-tagging\dataset-localNet\data_sequence_original\CIM_DATA_EL1.seq.noresize.18.h5, indices: [72 73 74 75]
+INFO:prepare_data_functions:Adding only one slice...
+INFO:prepare_data_functions:No landmark coordinates for patient VK_XA_6C_JJ_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4J_2E_25_MF_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient YM_M9_DN_KS_Bio
+INFO:prepare_data_functions:No contours found. PatID: CT9THM4J Folder ID: 3496282
+INFO:prepare_data_functions:No landmark coordinates for patient EA_VU_V9_CZ_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HU_AE_5M_VN
+ERROR:prepare_data_functions:Patient C6_3T_8A_9J has duplicate slice names
+INFO:prepare_data_functions:No landmark coordinates for patient 8X_QH_5Z_56_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient VX_XK_B5_CP
+INFO:prepare_data_functions:No landmark coordinates for patient V5_48_FE_3Q_Bio
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: CYC654
+INFO:prepare_data_functions:No landmark coordinates for patient 4C_Z9_74_CH_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CN_4M_K7_NY_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient QV_5E_FS_ED_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HB_9Z_FE_5H_Bio
+INFO:prepare_data_functions:No contours found. PatID: N3YCB2X4 Folder ID: 2612175
+ERROR:prepare_data_functions:Duplicate slice! Patient: Y5_YB_DQ_2B_Bio, CIM_Path: CIM_DATA_KF\Y5_YB_DQ_2B_Bio_KF, h5 filename: C:\Users\arad572\Documents\MR-tagging\dataset-localNet\data_sequence_original\CIM_DATA_KF.seq.noresize.7.h5, indices: [85 86 87]
+INFO:prepare_data_functions:Adding only one slice...
+INFO:prepare_data_functions:No landmark coordinates for patient 44_ZK_SN_SS
+INFO:prepare_data_functions:No landmark coordinates for patient 8K_4Y_YA_VK_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient TV_7B_CA_ZC_Bio
+ERROR:prepare_data_functions:Patient CN_YC_T9_NE has duplicate slice names
+INFO:prepare_data_functions:No landmark coordinates for patient 3X_4S_UJ_PB
+INFO:prepare_data_functions:No landmark coordinates for patient 8K_VU_B3_H3_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HP_ST_VN_DM
+INFO:prepare_data_functions:No landmark coordinates for patient V9_B5_VJ_NU_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CN_EF_4C_TC_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4Q_F8_TQ_9C_Bio
+INFO:prepare_data_functions:No contours found. PatID: C2QFU59M Folder ID: 2709002
+INFO:prepare_data_functions:No landmark coordinates for patient HB_5V_92_J5
+INFO:prepare_data_functions:No landmark coordinates for patient HB_SE_A5_UA
+INFO:prepare_data_functions:No contours found. PatID: J3CC7EMD Folder ID: 1539089
+INFO:prepare_data_functions:No landmark coordinates for patient 89_4X_VZ_3N_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient VM_DZ_5M_9B
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: HFEJVUJA
+INFO:prepare_data_functions:No landmark coordinates for patient VD_YY_ZH_4U_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient J7_PM_X2_Q6_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CU_7C_VU_N6_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient Y9_FP_9U_M6_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 48_83_Z4_42
+INFO:prepare_data_functions:No landmark coordinates for patient HZ_3M_KE_C4_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JB_A2_YZ_X7_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8K_NX_S7_Z8_Bio
+ERROR:prepare_data_functions:Duplicate slice! Patient: Q9_3Z_NA_P8, CIM_Path: CIM_Data_ze_1\Q9_3Z_NA_P8_ze, h5 filename: C:\Users\arad572\Documents\MR-tagging\dataset-localNet\data_sequence_original\CIM_Data_ze_1.seq.noresize.0.h5, indices: [29 30 31 32]
+INFO:prepare_data_functions:Adding only one slice...
+INFO:prepare_data_functions:No landmark coordinates for patient QH_P3_TS_48_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 44_U6_NH_TN_Bio
+INFO:prepare_data_functions:No contours found. PatID: QVX2CM7V Folder ID: 3371384
+INFO:prepare_data_functions:No landmark coordinates for patient QC_NT_Q2_MY_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8K_6P_S5_NE
+INFO:prepare_data_functions:No landmark coordinates for patient CE_7A_MP_N4
+INFO:prepare_data_functions:No landmark coordinates for patient J3_V2_U7_SY_Bio
+ERROR:prepare_data_functions:Duplicate slice! Patient: PS_TX_KC_Z6, CIM_Path: CIM_Data_ze_1\PS_TX_KC_Z6_ze, h5 filename: C:\Users\arad572\Documents\MR-tagging\dataset-localNet\data_sequence_original\CIM_Data_ze_1.seq.noresize.8.h5, indices: [35 36 37 38]
+INFO:prepare_data_functions:Adding only one slice...
+INFO:prepare_data_functions:No contours found. PatID: H7AAEMCY Folder ID: 5526448
+INFO:prepare_data_functions:No landmark coordinates for patient VX_3E_2D_Y5
+INFO:prepare_data_functions:No landmark coordinates for patient 4H_YQ_65_KS
+ERROR:prepare_data_functions:Missing zip file. PatID: Q89CKJTC FolderID: 3689877
+INFO:prepare_data_functions:No contours found. PatID: 8XQUT72M Folder ID: 4641395
+INFO:prepare_data_functions:No contours found. PatID: HFJH3TZ4 Folder ID: 2107222
+INFO:prepare_data_functions:No landmark coordinates for patient VM_MN_22_2D
+INFO:prepare_data_functions:No landmark coordinates for patient JU_UN_2M_UN_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4J_C3_Q9_9V
+INFO:prepare_data_functions:No landmark coordinates for patient VX_7K_SQ_B6_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4J_QV_FV_UP_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient C2_YD_JX_8V
+ERROR:prepare_data_functions:Missing zip file. PatID: 85569AQE FolderID: 5229065
+INFO:prepare_data_functions:No landmark coordinates for patient C2_CC_KJ_MM_Bio
+ERROR:prepare_data_functions:Patient HU_6B_V8_8B has duplicate slice names
+INFO:prepare_data_functions:No landmark coordinates for patient JZ_Q7_D7_HM_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient VX_5X_5F_8S
+INFO:prepare_data_functions:No landmark coordinates for patient 8K_2P_8V_ET
+INFO:prepare_data_functions:No landmark coordinates for patient JB_CQ_VU_65
+ERROR:prepare_data_functions:Missing zip file. PatID: 8MV8PZTD FolderID: 3904387
+INFO:prepare_data_functions:No contours found. PatID: HBS8FBYT Folder ID: 5361439
+INFO:prepare_data_functions:No landmark coordinates for patient JZ_2U_DU_2B_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8S_92_K9_SV_Bio
+INFO:prepare_data_functions:No contours found. PatID: 4VYFE75C Folder ID: 1161628
+INFO:prepare_data_functions:No landmark coordinates for patient 4J_Y5_B5__XN
+INFO:prepare_data_functions:No landmark coordinates for patient QH_DB_VU_KM_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4H_NU_KM_8B_Bio
+INFO:prepare_data_functions:No contours found. PatID: 449AP24Z Folder ID: 3414170
+INFO:prepare_data_functions:No landmark coordinates for patient H3_S6_SU_5P_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 45_9B_EX_5B_Bio
+ERROR:prepare_data_functions:Missing zip file. PatID: 8KQM6VY7 FolderID: 5936146
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: 4QF9K35D
+INFO:prepare_data_functions:No landmark coordinates for patient 6V_6J_BB_TT_Bio
+ERROR:prepare_data_functions:Missing zip file. PatID: QD6BQKDH FolderID: 3223306
+INFO:prepare_data_functions:No landmark coordinates for patient H3_ZV_4K_N8
+INFO:prepare_data_functions:No landmark coordinates for patient VX_U8_P6_MP
+INFO:prepare_data_functions:No landmark coordinates for patient V5_E7_XK_37_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient H3_UF_3U_3Y
+INFO:prepare_data_functions:No landmark coordinates for patient HB_74_7Z_QD_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 2Z_XE_7T_DQ_Bio
+ERROR:prepare_data_functions:Patient 4V_H4_VE_VT has duplicate slice names
+ERROR:prepare_data_functions:Missing zip file. PatID: 89NAV4P2 FolderID: 1680286
+INFO:prepare_data_functions:No landmark coordinates for patient VT_VV_FD_6N
+ERROR:prepare_data_functions:Missing zip file. PatID: NZY3JUQ7 FolderID: 5485470
+ERROR:prepare_data_functions:Patient CA_C3_SE_8K_Bio has duplicate slice names
+INFO:prepare_data_functions:No landmark coordinates for patient 89_HQ_KZ_V8
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: H78Y7PK4
+INFO:prepare_data_functions:No landmark coordinates for patient VK_UQ_7J_7P_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4J_4S_UF_X7_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4K_QE_U7_PQ
+INFO:prepare_data_functions:No landmark coordinates for patient QJ_9K_K2_XV_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient VK_BY_JD_UM_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 44_Z6_66_VU
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: HPMX4CVZ
+INFO:prepare_data_functions:No landmark coordinates for patient TQ_NH_Q8_ZK_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HF_J5_J9_27
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: 4VNN9PC2
+INFO:prepare_data_functions:No landmark coordinates for patient VK_UY_2A_47
+INFO:prepare_data_functions:No contours found. PatID: QV3F3XSA Folder ID: 4139453
+INFO:prepare_data_functions:No landmark coordinates for patient CY_VZ_JV_DS
+INFO:prepare_data_functions:No landmark coordinates for patient 8D_X2_QP_34_Bio
+ERROR:prepare_data_functions:Duplicate slice! Patient: 85_9P_AK_JH_Bio, CIM_Path: CIM_DATA_AB\85_9P_AK_JH_Bio-ab, h5 filename: C:\Users\arad572\Documents\MR-tagging\dataset-localNet\data_sequence_original\CIM_DATA_AB.seq.noresize.8.h5, indices: [70 71 72 73]
+INFO:prepare_data_functions:Adding only one slice...
+ERROR:prepare_data_functions:Missing zip file. PatID: 44DE7SF7 FolderID: 2098111
+INFO:prepare_data_functions:No landmark coordinates for patient V5_VS_FB_BF_Bio
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: CANSKVS5
+INFO:prepare_data_functions:No landmark coordinates for patient V5_Y3_5S_4U_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient V9_7M_U2_B9_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient H3_P8_P5_72
+ERROR:prepare_data_functions:Duplicate slice! Patient: VX_9H_8D_3T, CIM_Path: CIM_Data_ze_1\VX_9H_8D_3T_ze, h5 filename: C:\Users\arad572\Documents\MR-tagging\dataset-localNet\data_sequence_original\CIM_Data_ze_1.seq.noresize.0.h5, indices: [15 16 17 18]
+INFO:prepare_data_functions:Adding only one slice...
+INFO:prepare_data_functions:No landmark coordinates for patient J3_YH_HT_NH_Bio
+ERROR:prepare_data_functions:Missing zip file. PatID: QCV4USDY FolderID: 5856659
+INFO:prepare_data_functions:No landmark coordinates for patient J3_J8_ME_CM_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JB_NQ_HC_YH_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4H_6C_JZ_VE
+INFO:prepare_data_functions:No landmark coordinates for patient CN_CQ_YQ_8B
+INFO:prepare_data_functions:No landmark coordinates for patient VK_56_TB_PB
+INFO:prepare_data_functions:No landmark coordinates for patient 85_UP_F4_DS_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4H_NP_Y7_HU_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8D_73_CD_X4
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: CY2275VN
+ERROR:prepare_data_functions:Patient 8S_B7_53_C2_Bio has duplicate slice names
+INFO:prepare_data_functions:No landmark coordinates for patient 89_4T_HK_P2_Bio
+INFO:prepare_data_functions:No contours found. PatID: HZSVN66S Folder ID: 5373653
+ERROR:prepare_data_functions:Duplicate slice! Patient: V5_83_N4_3U, CIM_Path: CIM_DATA_ze_3\V5_83_N4_3U_ze, h5 filename: C:\Users\arad572\Documents\MR-tagging\dataset-localNet\data_sequence_original\CIM_DATA_ze_3.seq.noresize.6.h5, indices: [88 89 90 91]
+INFO:prepare_data_functions:Adding only one slice...
+INFO:prepare_data_functions:No contours found. PatID: N7KTPN4T Folder ID: 4886497
+INFO:prepare_data_functions:No landmark coordinates for patient QC_VM_EZ_45_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4Q_XF_DT_VJ_Bio
+ERROR:prepare_data_functions:Missing zip file. PatID: 44USYT2C FolderID: 4274562
+INFO:prepare_data_functions:No landmark coordinates for patient JF_55_JZ_HA_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient YD_HZ_QJ_KA_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient QV_3N_ZU_6Y_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CY_83_VU_8D
+INFO:prepare_data_functions:No landmark coordinates for patient 4H_VX_TS_MS_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 6H_2P_KB_XV_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JU_9N_HA_XA_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JU_DD_3H_XD
+INFO:prepare_data_functions:No landmark coordinates for patient Y9_7A_U7_H4_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HB_S5_PC_D7_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient V9_MA_DQ_CS_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8X_C4_AM_7A_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8S_UV_DE_QE_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CT_7Y_9U_XF_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient C6_9T_CY_HC_Bio
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: QC25Z95T
+INFO:prepare_data_functions:No landmark coordinates for patient 4Q_X7_48_9Z_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient V9_5M_4V_T5
+INFO:prepare_data_functions:No landmark coordinates for patient 8K_EZ_XE_D3_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4J_JV_5B_PC
+INFO:prepare_data_functions:No landmark coordinates for patient CE_BH_7T_F5
+INFO:prepare_data_functions:No contours found. PatID: VS4VFDC5 Folder ID: 2640979
+INFO:prepare_data_functions:No landmark coordinates for patient 85_76_HM_8N_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient QQ_2Q_FZ_FM_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient QQ_CP_HB_EM
+INFO:prepare_data_functions:No landmark coordinates for patient QC_V7_PQ_YD_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CY_Q2_XM_V3_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient H7_HK_6Z_77_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HF_2D_MV_SN_Bio
+ERROR:prepare_data_functions:Missing zip file. PatID: 4JCJBFH3 FolderID: 3830323
+INFO:prepare_data_functions:No landmark coordinates for patient HF_8U_PF_NN_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8S_XH_BY_FP_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient QC_25_26_47
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: QVB4V2HN
+INFO:prepare_data_functions:No landmark coordinates for patient 4J_VS_73_D9
+INFO:prepare_data_functions:No contours found. PatID: HB59K82H Folder ID: 3770370
+INFO:prepare_data_functions:No landmark coordinates for patient 4Q_KU_XB_SC_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 44_SH_7V_7C_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient C6_Z2_9K_NK_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient VM_SD_2V_23_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JU_3C_KH_9Z_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8N_AE_T6_27_Bio
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: HUQ6DH4M
+INFO:prepare_data_functions:No landmark coordinates for patient VS_N3_QV_22_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CE_77_NV_64_Bio
+INFO:prepare_data_functions:No contours found. PatID: 2FEUXCPX Folder ID: 2764800
+INFO:prepare_data_functions:No landmark coordinates for patient V6_QX_SU_TT_Bio
+ERROR:prepare_data_functions:Duplicate slice! Patient: Q4_AX_DB_QC, CIM_Path: CIM_Data_ze_1\Q4_AX_DB_QC_ze, h5 filename: C:\Users\arad572\Documents\MR-tagging\dataset-localNet\data_sequence_original\CIM_Data_ze_1.seq.noresize.1.h5, indices: [55 56 57]
+INFO:prepare_data_functions:Adding only one slice...
+INFO:prepare_data_functions:No landmark coordinates for patient 4J_J2_UC_N2_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JZ_JA_VV_9C_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CF_99_MH_NN
+INFO:prepare_data_functions:No landmark coordinates for patient VD_CC_V9_QT_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient VD_A9_94_P3
+INFO:prepare_data_functions:No landmark coordinates for patient JB_Q9_MK_DC_Bio
+ERROR:prepare_data_functions:Missing zip file. PatID: 6C39CJ2N FolderID: 2240534
+INFO:prepare_data_functions:No landmark coordinates for patient 8D_DV_JS_UV_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient J3_QX_VA_F4_Bio
+INFO:prepare_data_functions:No contours found. PatID: JBYYNH3J Folder ID: 4544646
+INFO:prepare_data_functions:No contours found. PatID: ET5QX3T7 Folder ID: 4815020
+INFO:prepare_data_functions:No landmark coordinates for patient JP_TP_BA_99_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JP_HJ_CM_QJ_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient VS_CZ_CZ_2N
+ERROR:prepare_data_functions:Patient JB_48_BD_52_Bio has duplicate slice names
+INFO:prepare_data_functions:No landmark coordinates for patient 4Q_MJ_X9_CN
+INFO:prepare_data_functions:No landmark coordinates for patient JU_U5_BB_4C_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4C_PV_M7_E9
+INFO:prepare_data_functions:No landmark coordinates for patient 4H_ET_9X_9N
+INFO:prepare_data_functions:No contours found. PatID: C6MCFAK5 Folder ID: 3445941
+INFO:prepare_data_functions:No landmark coordinates for patient VM_DP_V2_TS_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CN_48_DA_78_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8K_AM_MY_3Q_Bio
+ERROR:prepare_data_functions:Missing zip file. PatID: VD2299Q2 FolderID: 2700128
+INFO:prepare_data_functions:No landmark coordinates for patient CN_2Z_57_8E_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient EY_VJ_AV_UE_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient Q8_BQ_K9_Y5
+INFO:prepare_data_functions:No landmark coordinates for patient QJ_D4_D6_CM
+INFO:prepare_data_functions:No contours found. PatID: 44PABVXZ Folder ID: 2073229
+INFO:prepare_data_functions:No landmark coordinates for patient V5_JK_Z6_QQ_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient VM_XJ_B4_PA_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4V_24_FS_CY_Bio
+INFO:prepare_data_functions:No contours found. PatID: 8D9XATF5 Folder ID: 5625588
+INFO:prepare_data_functions:No landmark coordinates for patient 8E_9Z_CZ_CN_Bio
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: VK7DCYHP
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: JHMHE6BP
+INFO:prepare_data_functions:No landmark coordinates for patient JZ_VX_56_V2
+INFO:prepare_data_functions:Finished creating train set
+INFO:prepare_data_functions:Total number of unique cases: 2199
+INFO:prepare_data_functions:Total number of slices: 5989
+INFO:prepare_data_functions:Elapsed time: 6.0 hours 34.0 minutes 45 seconds
+
+INFO:prepare_data_functions:Obtaining data for validation set
+INFO:prepare_data_functions:No landmark coordinates for patient QV_ZJ_74_85
+INFO:prepare_data_functions:No landmark coordinates for patient JU_ME_UP_U6
+INFO:prepare_data_functions:No landmark coordinates for patient C6_UD_K5_FE_Bio
+ERROR:prepare_data_functions:Patient 4V_NS_8E_V2 has duplicate slice names
+INFO:prepare_data_functions:No contours found. PatID: VKD2EXNT Folder ID: 2938702
+INFO:prepare_data_functions:No landmark coordinates for patient 4J_YY_BX_3F
+INFO:prepare_data_functions:No landmark coordinates for patient HZ_ZC_DU_HV
+INFO:prepare_data_functions:No landmark coordinates for patient J3_ED_8Z_Z2_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8D_M8_EY_TT
+INFO:prepare_data_functions:No landmark coordinates for patient 4V_VC_V5_58_Bio
+ERROR:prepare_data_functions:Missing zip file. PatID: JPN67UEA FolderID: 1669106
+INFO:prepare_data_functions:No landmark coordinates for patient CT_9Z_A8_85_Bio
+ERROR:prepare_data_functions:Missing zip file. PatID: EY8K6QKX FolderID: 4782202
+INFO:prepare_data_functions:No landmark coordinates for patient CE_XZ_KP_NC
+INFO:prepare_data_functions:No contours found. PatID: H373UMTU Folder ID: 5680002
+INFO:prepare_data_functions:No landmark coordinates for patient HZ_5Y_8M_BY_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient VY_PT_QX_6N_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 6Q_FJ_2Q_7H_Bio
+INFO:prepare_data_functions:No contours found. PatID: J7BJM5P8 Folder ID: 5220890
+INFO:prepare_data_functions:No landmark coordinates for patient CA_HQ_4K_YP_Bio
+ERROR:prepare_data_functions:Duplicate slice! Patient: 8D_36_Q6_8F_Bio, CIM_Path: CIM_DATA_AB\8D_36_Q6_8F_Bio-ab, h5 filename: C:\Users\arad572\Documents\MR-tagging\dataset-localNet\data_sequence_original\CIM_DATA_AB.seq.noresize.14.h5, indices: [35 36 37]
+INFO:prepare_data_functions:Adding only one slice...
+INFO:prepare_data_functions:No landmark coordinates for patient QH_9F_MP_5Y
+INFO:prepare_data_functions:No landmark coordinates for patient J3_2U_Q5_VM_Bio
+INFO:prepare_data_functions:No contours found. PatID: 894QE8HK Folder ID: 3790079
+INFO:prepare_data_functions:No landmark coordinates for patient 8M_6U_99_3T_Bio
+INFO:prepare_data_functions:No contours found. PatID: 44ZHE8YQ Folder ID: 1322043
+INFO:prepare_data_functions:No landmark coordinates for patient J3_YV_VC_AC
+INFO:prepare_data_functions:No landmark coordinates for patient VS_4P_5T_8J_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HF_YY_5Z_3P_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JZ_YD_CM_JH_Bio
+ERROR:prepare_data_functions:Patient QQ_8D_U3_DT has duplicate slice names
+INFO:prepare_data_functions:No contours found. PatID: JZJPCSQ2 Folder ID: 4574060
+ERROR:prepare_data_functions:Missing zip file. PatID: JB88VT8T FolderID: 3957671
+INFO:prepare_data_functions:No landmark coordinates for patient 8X_YH_9F_XK_Bio
+INFO:prepare_data_functions:No contours found. PatID: H72VEEQS Folder ID: 5326250
+ERROR:prepare_data_functions:Duplicate slice! Patient: V9_UN_YT_P6_Bio, CIM_Path: CIM_DATA_KF\V9_UN_YT_P6_Bio_KF, h5 filename: C:\Users\arad572\Documents\MR-tagging\dataset-localNet\data_sequence_original\CIM_DATA_KF.seq.noresize.4.h5, indices: [52 53 54 55]
+INFO:prepare_data_functions:Adding only one slice...
+INFO:prepare_data_functions:No landmark coordinates for patient HP_5E_PT_C3_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient EN_43_24_EM_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JZ_EC_PA_CA_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8M_EP_4P_KN
+INFO:prepare_data_functions:No contours found. PatID: 89TCU6DV Folder ID: 4136436
+INFO:prepare_data_functions:No landmark coordinates for patient JF_75_76_MD_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient QH_7V_BD_KH_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient Q8_SS_XJ_JT_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8X_HN_X4_CD_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8X_CY_MP_97_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4H_AB_P2_6S_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JP_HH_XC_JT_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CN_6A_S5_DY_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient QC_6U_JC_2U_Bio
+INFO:prepare_data_functions:No contours found. PatID: JUBKXKEP Folder ID: 2750577
+ERROR:prepare_data_functions:Missing zip file. PatID: 4HT2M24Q FolderID: 1556262
+INFO:prepare_data_functions:No landmark coordinates for patient VX_BK_62_FY_Bio
+INFO:prepare_data_functions:No contours found. PatID: 64PUKFZ4 Folder ID: 3665444
+INFO:prepare_data_functions:No landmark coordinates for patient 86_77_QF_BM_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JF_MV_A3_HV_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CP_JV_ZZ_ZM_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient VK_9U_K8_TY_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient J4_A3_JU_V2
+ERROR:prepare_data_functions:Missing zip file. PatID: Q4TMFXEZ FolderID: 5899229
+INFO:prepare_data_functions:No landmark coordinates for patient 4V_8C_HV_PB_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HF_J2_QA_MP
+INFO:prepare_data_functions:No landmark coordinates for patient N7_3B_88_P5_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient C6_XD_QB_3N_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CA_QT_29_4U_Bio
+ERROR:prepare_data_functions:Patient 4V_44_9V_ZE has duplicate slice names
+ERROR:prepare_data_functions:Missing zip file. PatID: VK7827XK FolderID: 3790351
+INFO:prepare_data_functions:No landmark coordinates for patient 4J_T6_56_MZ_Bio
+ERROR:prepare_data_functions:Missing zip file. PatID: H3KFHKHS FolderID: 3432771
+INFO:prepare_data_functions:No landmark coordinates for patient J7_34_AF_F3
+ERROR:prepare_data_functions:Patient VK_KJ_49_TA has duplicate slice names
+INFO:prepare_data_functions:No landmark coordinates for patient 4Q_M2_VX_YX
+INFO:prepare_data_functions:Finished creating validation set
+INFO:prepare_data_functions:Total number of unique cases: 747
+INFO:prepare_data_functions:Total number of slices: 2001
+INFO:prepare_data_functions:Elapsed time: 2.0 hours 12.0 minutes 9 seconds
+
+INFO:prepare_data_functions:Obtaining data for test set
+INFO:prepare_data_functions:No landmark coordinates for patient QJ_KQ_MA_67
+INFO:prepare_data_functions:No landmark coordinates for patient BF_AK_UT_UV
+INFO:prepare_data_functions:No landmark coordinates for patient VX_MX_95_XN
+INFO:prepare_data_functions:No landmark coordinates for patient JB_JA_B2_5S_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HF_AH_V9_9V_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient QC_A4_SE_FN
+INFO:prepare_data_functions:No landmark coordinates for patient CN_TJ_C9_UA
+INFO:prepare_data_functions:No landmark coordinates for patient V5_AE_BH_SN_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient AD_D2_84_4Y_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HU_ED_8Q_5X_Bio
+ERROR:prepare_data_functions:SliceInfoFile not found. Pat ID: 5414158
+INFO:prepare_data_functions:No landmark coordinates for patient J8_9B_KV_6E_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4J_J6_YS_YN_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 6C_XD_NP_EB_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient YD_4Z_5Y_42_Bio
+ERROR:prepare_data_functions:SliceInfoFile not found. Pat ID: 2529178
+INFO:prepare_data_functions:No landmark coordinates for patient HU_4X_3N_6F
+INFO:prepare_data_functions:No landmark coordinates for patient 4C_MM_VV_5M_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient VM_FP_N5_9A
+INFO:prepare_data_functions:No landmark coordinates for patient 89_T6_39_FS_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JF_XH_FZ_D9
+INFO:prepare_data_functions:No landmark coordinates for patient Q8_S8_6B_XF_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HF_TH_7A_PH_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CA_2C_MM_XN_Bio
+ERROR:prepare_data_functions:Duplicate slice! Patient: VX_3Z_SN_MC, CIM_Path: CIM_DATA_ze_3\VX_3Z_SN_MC_ze, h5 filename: C:\Users\arad572\Documents\MR-tagging\dataset-localNet\data_sequence_original\CIM_DATA_ze_3.seq.noresize.9.h5, indices: [37 38 39 40]
+INFO:prepare_data_functions:Adding only one slice...
+INFO:prepare_data_functions:No landmark coordinates for patient AD_BJ_FD_22_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JF_UN_XM_QK_Bio
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: 8DUNDSQ9
+INFO:prepare_data_functions:No contours found. PatID: C2ETNXAX Folder ID: 5865827
+INFO:prepare_data_functions:No landmark coordinates for patient JU_7H_5A_FY
+INFO:prepare_data_functions:No contours found. PatID: JB4PJY57 Folder ID: 4143199
+INFO:prepare_data_functions:No landmark coordinates for patient JZ_CZ_8Y_4H_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HF_HM_KZ_D3_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient H7_VF_KC_D8_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JB_EM_P3_AS_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CE_PS_29_2K_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8E_KE_YY_DC
+INFO:prepare_data_functions:No landmark coordinates for patient 8X_2V_B5_X4_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient QJ_K7_U8_JF_Bio
+ERROR:prepare_data_functions:Missing zip file. PatID: V5ATQE88 FolderID: 1414955
+INFO:prepare_data_functions:No landmark coordinates for patient HZ_5U_FE_XY
+INFO:prepare_data_functions:No landmark coordinates for patient HF_E5_T6_FN_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CE_5V_VH_M8
+INFO:prepare_data_functions:No contours found. PatID: NBVV9N7V Folder ID: 2748368
+INFO:prepare_data_functions:No landmark coordinates for patient VE_QS_UD_MU_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient J3_YD_PZ_97_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient J7_UJ_32_HY
+INFO:prepare_data_functions:No contours found. PatID: NFBQ2PAA Folder ID: 3730583
+ERROR:prepare_data_functions:Missing zip file. PatID: 4H4M7CCH FolderID: 1499474
+INFO:prepare_data_functions:No landmark coordinates for patient C6_ZU_9S_VX_Bio
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: JC4Q8X86
+INFO:prepare_data_functions:No landmark coordinates for patient JB_T8_KY_5F_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 89_TS_B3_VE_Bio
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: QQ8UFEQH
+INFO:prepare_data_functions:No landmark coordinates for patient CY_CM_7S_YC_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 89_AF_85_J7_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CT_UC_7M_V4_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HP_D9_7T_FY
+ERROR:prepare_data_functions:Folder ID not found in mapping file. PatID: CNVBNH9C
+INFO:prepare_data_functions:No landmark coordinates for patient HU_HX_N8_3U
+INFO:prepare_data_functions:No landmark coordinates for patient JP_CM_5V_V6_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CE_5A_UJ_3J_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 85_S4_J3_JV_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CA_E5_KA_EP_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JP_JK_3K_V4
+INFO:prepare_data_functions:No landmark coordinates for patient 8X_J5_29_63_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HB_ZV_9H_SX_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient EY_HY_B2_AX_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient V5_HQ_EH_V5_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient HJ_H6_FT_NT
+INFO:prepare_data_functions:No landmark coordinates for patient 2F_AQ_J4_3N_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient TH_BM_VZ_SE_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient JP_C3_78_AZ
+INFO:prepare_data_functions:No landmark coordinates for patient V5_QY_FM_AX_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 4K_VE_8M_TC
+INFO:prepare_data_functions:No landmark coordinates for patient Q4_CX_4N_8J_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8K_HK_AH_6X_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient 8D_D4_UB_CK_Bio
+INFO:prepare_data_functions:No landmark coordinates for patient CY_FH_FF_Q5
+INFO:prepare_data_functions:No landmark coordinates for patient J7_ZY_BN_99
+INFO:prepare_data_functions:No landmark coordinates for patient J7_F3_E5_27
+INFO:prepare_data_functions:No landmark coordinates for patient V5_HD_FQ_22
+INFO:prepare_data_functions:No landmark coordinates for patient V9_MD_CF_VS
+INFO:prepare_data_functions:No landmark coordinates for patient CT_SS_47_PP
+INFO:prepare_data_functions:No landmark coordinates for patient CN_VD_7M_YY_Bio
+INFO:prepare_data_functions:Finished creating test set
+INFO:prepare_data_functions:Total number of unique cases: 736
+INFO:prepare_data_functions:Total number of slices: 2020
+INFO:prepare_data_functions:Elapsed time: 2.0 hours 13.0 minutes 21 seconds
+
+INFO:prepare_data_functions:====================H5 FILE CREATION FINISHED!====================
+INFO:prepare_data_functions:h5 file: C:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\h5_files\UK_Biobank.h5
+INFO:prepare_data_functions:Operation finished at 2019-01-23 04:31:47.787190
+INFO:prepare_data_functions:Total elapsed time: 11.0 hours 0.0 minutes 16 seconds
+

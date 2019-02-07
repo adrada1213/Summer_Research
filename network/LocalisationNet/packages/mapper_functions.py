@@ -3,6 +3,7 @@ import scipy.ndimage as ndimage
 import numpy as np
 import math
 import h5py
+import re
 
 '''
     Obsolete
@@ -22,71 +23,51 @@ def _load_hd5_file_index(fpath, idx):
     Only the ED frame is taken from the image sequence
 
 '''
-def _load_hd5_img_and_bbox_from_sequence(fpath, idx):
-    hd5path = fpath
-    with h5py.File(hd5path, 'r') as hl:
+def _load_hd5_img_and_centroid_from_sequence(fpath, group, idx):
+    fpath = fpath.decode('utf-8')
+    group = group.decode('utf-8')
+    #fpath = re.search("\'.*\'", fpath).string
+    #group = re.search("\'.*\'", group).string
+    with h5py.File(fpath, 'r') as hf:
+        grp_cine = hf["//{}//cine".format(group)]
+
         # [n, time=0, 256, 256]
-        ed_img = np.asarray(hl.get('ed_imgs')[idx,0,:,:]) # we only need the first frame
+        image = np.asarray(grp_cine.get('images')[idx,0,:,:]) # we only need the first frame
         # [n, 4]
-        bbox = np.asarray(hl.get('bbox_corners')[idx])
+        centroid = np.asarray(grp_cine.get('centroids')[idx])
+
     # !!! IMPORTANT, we need to cast this to the proper data type like below
     # Default type is double/float64
-    return ed_img.astype('float32'), bbox.astype('float32')
+    return image.astype('float32'), centroid.astype('float32')
     
 '''
     Rotate the image and bounding box
     Currently it only does 90 degree multiplication
 '''
-def _rotate_img_and_bbox(img, bbox):
+def _rotate_img_and_centroid(img, centroid):
     # TODO: adjust this, currently if the number falls to 0, or more than 3, the image is not rotated
     rnd = randint(0,7) 
     # print('random',rnd)
     if (rnd == 0 or rnd > 3):
         # we give higher chance the image is not being rotated
-        return img, bbox
+        return img, centroid
     else:
         # we do only rotation for 90, 180, and 270 for now
         angle = rnd * 90
         new_img = ndimage.rotate(img, angle, reshape=False)
-        new_bbox = rotate_coords_bbox(img.shape, bbox, -angle)
+        new_bbox = rotate_coords_centroid(img.shape, centroid, -angle)
 
         # return new_img.astype('float32'), new_bbox
         return new_img, new_bbox.astype('float32')
 
-'''
-    Adjust the width and height of the bounding box to a certain fraction
-'''
-def _adjust_bounding_box(img, coords, adjustment_fraction):
-    diff_x = coords[2] - coords[0]
-    diff_y = coords[3] - coords[1]
-    
-    diffs = np.array([-diff_x, -diff_y, diff_x, diff_y]) * adjustment_fraction
-    new_coords = coords + diffs
-    #print(diff_x, diff_y)
-    # print('old coords', coords)
-    # print('new coords', new_coords)
-    return img, new_coords
-
-def rotate_coords_bbox(img_shape, coords, angle):
+def rotate_coords_centroid(img_shape, coords, angle):
     center_point = np.asarray(img_shape)/2
 
     point = [coords[0], coords[1]]
-    x1 = rotate_single_point(point, angle, center_point)
-    
-    point = [coords[2], coords[3]]
-    x2 = rotate_single_point(point, angle, center_point)
+    x = rotate_single_point(point, angle, center_point)
 
-    min_x = min(x1[0], x2[0])
-    min_y = min(x1[1], x2[1])
+    new_coords = np.asarray([x[0], x[1], coords[2]])
 
-    max_x = max(x1[0], x2[0])
-    max_y = max(x1[1], x2[1])
-
-    # new_coords = np.asarray([x1[0], x1[1], x2[0], x2[1]])
-    # print(new_coords)
-    new_coords = np.asarray([min_x, min_y, max_x, max_y])
-    # print(coords)
-    # print(new_coords)
     return new_coords
 
 def rotate_single_point(point,angle, centerPoint):
@@ -190,10 +171,3 @@ def rotate_points(points,angle,centerPoint=(0,0)):
     new_coords[0] = new_coords[0]+centerPoint[0]
     new_coords[1] = new_coords[1]+centerPoint[1]
     return new_coords
-
-
-
-
-
-
-

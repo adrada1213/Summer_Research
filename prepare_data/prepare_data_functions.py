@@ -123,6 +123,35 @@ def get_slices(ptr_content):
     slices = ptr_content[slice_condition]["slice"]
     return slices
 
+def calculate_centroid(coords):
+    center_x = (max(coords[0]) + min(coords[0])) /2  
+    center_y = (max(coords[1]) + min(coords[1])) /2 
+
+    centroid = [center_x, center_y]
+
+    return centroid
+
+def calculate_edge_length(centroid, coords):
+    # calculates half the edge length!!!
+    edge_length_x = max(coords[0])-centroid[0]
+    edge_length_y = max(coords[1])-centroid[1]
+
+    edge_length = max(edge_length_x, edge_length_y) 
+    edge_length = edge_length + (edge_length*0.3)
+
+    return edge_length
+
+def translate_coordinates(coordinates, translation):
+    new_x_coords = []
+    new_y_coords = []
+    for i in range(len(coordinates[0])):
+        new_x_coords.append(coordinates[0][i]+translation[0])
+        new_y_coords.append(coordinates[1][i]+translation[1])
+
+    new_coords = [new_x_coords, new_y_coords]
+
+    return new_coords
+
 '''
 This function is used to send an email together with the log file (google server)
 Input:  from_addr = email address you want to use to send the email (have to allow low level software - google how to do this)
