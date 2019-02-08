@@ -171,7 +171,7 @@ def plot_contour_points(contour_pts, cine_image, ed_slice):
         # show the plot
         plt.show()
 
-def get_contour_points(f_path, ed_slices):
+def get_contour_points(f_path, ed_slices, ):
     # initialise the dictionary containing the x, y, z coordinates of the contour for each slice
     contour_pts_3D = {}
     for ed_slice in ed_slices:
@@ -189,7 +189,7 @@ def get_contour_points(f_path, ed_slices):
     # We're only interested in the epicardial contour  (saepicardialControu) and the right ventricle septum (RVS)
     # we'll only get the coordinates from the slices that have matches with the tagged images
     for line in gpfile_content:
-        if (line[4] == "saepicardialContour" or line[4] == "RVS") and int(line[5]) in ed_slices:
+        if (line[4] == "RV_insert") and int(line[5]) in ed_slices:  #line[4] == "saepicardialContour" or line[4] == "RVS" or 
             if (len([line[0]]) == 1 and len([line[1]]) == 1 and len([line[2]])) == 1:
                 contour_pts_3D[int(line[5])][0].append(float(line[0]))
                 contour_pts_3D[int(line[5])][1].append(float(line[1]))
@@ -243,6 +243,7 @@ if __name__ == "__main__":
 
     # loop through the image pointers
     count = 0
+    no_match = 0
     for ptr in os.listdir(ptrs_path):
         count += 1
         if count % 500 == 0:
@@ -261,10 +262,16 @@ if __name__ == "__main__":
         try:
             p_index = p_ids.index(pat_id)
         except ValueError:
+            no_match += 1
+            print("No match in mapping file for patient {}".format(pat_name))
             continue
         f_id = f_ids[p_index]
         f_path = os.path.join(LVModel_path, f_id)   #get the folder path of the patient
 
+        if not os.path.isdir(f_path):
+            print("No folder for patient {} folder id {}".format(pat_name, f_id))
+
+        '''
         # get the slices and indices of the ed and es frames
         # if folder doesn't exist, go to the next patient
         try:
@@ -286,4 +293,5 @@ if __name__ == "__main__":
         plot_contour_points_3D(contour_pts_3D, ed_slices)
         break
     
-    print(count)
+        print(count)
+        '''

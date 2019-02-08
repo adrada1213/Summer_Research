@@ -21,7 +21,7 @@ import numpy as np
 import pydicom
 from datetime import datetime
 from time import time
-from prepare_data_functions import sendemail, get_pointer_paths, calculate_time_elapsed, log_and_print
+from prepare_data_functions import sendemail, get_pointer_paths, calculate_time_elapsed, log_and_print, log_error_and_print
 from dicom_functions import get_patient_name
 from pointer_functions import create_new_image_pointer, load_ptr_content
 
@@ -78,12 +78,11 @@ def create_img_ptrs(filepath, output_dir, suffix):
     print()
 
     # creating image pointers for tagged and cines based on the file path found in the image pointer
-    log_and_print(["Creating image pointer files in {}\n".format(output_dir)])
+    log_and_print(["Storing image pointer files in {}\n".format(output_dir)])
     try:
         i = -1
         for fp in filepath:
             for root, _, files in os.walk(fp):
-                new_fp = fp
                 images = []
                 # check if folder contains .dcm files. If yes, the current folder is a patient folder
                 images = [f for f in files if f.endswith(".dcm")]
@@ -98,10 +97,10 @@ def create_img_ptrs(filepath, output_dir, suffix):
                         # check if image pointer is not yet created
                         if "{}{}".format(patient_name.replace(" ", "_"), suffix) not in image_pointer_list:
                             # convert the patient path to a general one so it can be used in the future
-                            gen_patient_path = patient_path.replace(new_fp, "IMAGEPATH")    
+                            gen_patient_path = patient_path.replace(fp, "IMAGEPATH")    
                             try:
                                 # create the image pointer
-                                create_new_image_pointer(new_fp, patient_name, patient_path, gen_patient_path, sax_cine_prefix, tagged_cine_prefix, output_dir, suffix)
+                                create_new_image_pointer(fp, patient_name, patient_path, gen_patient_path, sax_cine_prefix, tagged_cine_prefix, output_dir, suffix)
                             except FileNotFoundError:
                                 # error handling
                                 logger.error("\nThe system cannot find the path specified {}\n".format(patient_path), exc_info=True)
@@ -164,7 +163,7 @@ def move_img_ptrs(ptr_path, output_dir_missing, suffix):
     try:
         for i, ptr in enumerate(ptr_files):
             # reading the content of the pointer file
-            ptr_content = load_ptr_content(ptr_path)
+            ptr_content = load_ptr_content(os.path.join(ptr_path,ptr))
 
             # only extract the first frame of each slice
             tagged_con = ptr_content["series"] == 1   #condition for tagged series
@@ -230,10 +229,10 @@ def find_matches(filepath, ptr_files_path, cim_models, cim_dir, output_dir_match
     # initialise other variables
     file_c = len([f for f in os.listdir(output_dir_match) if f.endswith(".img_imageptr")]) # variable to keep file count
     initial_file_c = file_c #number of files at the start of the program
-    tol = 1e-5 #tolerance to check if two slices match
     match = False   #initialise match state
     # if match finding was interrupted before, you can start from the last index shown in the log file
-    start_i = int(input("Enter the patient number you want to start with (beginning=0): "))
+    #start_i = int(input("Enter the patient number you want to start with (beginning=0): "))
+    start_i = 0
 
     # looping through each pointer file
     log_and_print(["Creating new image pointers in {}\n".format(output_dir_match)])
@@ -251,14 +250,14 @@ def find_matches(filepath, ptr_files_path, cim_models, cim_dir, output_dir_match
                     try:
                         #get the cim pointer path of current patient
                         cim_ptr_path = [cim_ptr for cim_ptr in cim_ptr_files if patient_name.lower() in cim_ptr.lower()][0] 
-                        logger.info("Patient#{}: {} - CIM image pointer found: {}".format(i+1, patient_name, cim_ptr_path))
+                        log_and_print("Patient#{}: {} - CIM image pointer found: {}".format(i+1, patient_name, cim_ptr_path))
                     except IndexError: 
                         try:
                             #get the cim pointer path of current patient
                             cim_ptr_path = [cim_ptr for cim_ptr in cim_ptr_files if patient_name.lower().replace("_bio", "") in cim_ptr.lower()][0] 
-                            logger.info("Patient#{}: {} - CIM image pointer found: {}".format(i+1, patient_name, cim_ptr_path))
+                            log_and_print("Patient#{}: {} - CIM image pointer found: {}".format(i+1, patient_name, cim_ptr_path))
                         except IndexError:    
-                            logger.error("Patient#{}: {} - No image pointer file found in the CIM folders\n".format(i+1, patient_name))
+                            log_error_and_print("Patient#{}: {} - No image pointer file found in the CIM folders\n".format(i+1, patient_name))
                             continue
                     
                     # reading the content of the pointer file (cine_and_tagged, and cim)
@@ -268,9 +267,9 @@ def find_matches(filepath, ptr_files_path, cim_models, cim_dir, output_dir_match
                         header=f.readline().strip()
 
                     # only extract the first frame of each slice (cine_and_tagged, and cim)
-                    condition_1 = np.logical_and(ptr_content["series"] == 0, ptr_content["index"] == 0) #condition to find the first frames of each slice in normal cine series
-                    condition_2 = np.logical_and(ptr_content["series"] == 1, ptr_content["index"] == 0)   #condition to find the first frames of each slice in tagged cine series
-                    condition_3 = np.logical_and(cim_ptr_content["series"] == 0, cim_ptr_content["index"] == 0) #condition to find the first frames of each slice in tagged cine series (cim)
+                    condition_1 = np.logical_and(ptr_content["series"] == 0, ptr_content["frame"] == 0) #condition to find the first frames of each slice in normal cine series
+                    condition_2 = np.logical_and(ptr_content["series"] == 1, ptr_content["frame"] == 0)   #condition to find the first frames of each slice in tagged cine series
+                    condition_3 = np.logical_and(cim_ptr_content["series"] == 0, cim_ptr_content["frame"] == 0) #condition to find the first frames of each slice in tagged cine series (cim)
                     first_fr_cine = ptr_content[condition_1]   #extract the first frames from each slice in normal cine series
                     first_fr_tagged = ptr_content[condition_2]   #extract the first frames from each slice in tagged cine series
                     cim_first_fr_tagged = cim_ptr_content[condition_3]  #extract the first frames from each slice in tagged cine series of the cim ptr file
@@ -283,9 +282,8 @@ def find_matches(filepath, ptr_files_path, cim_models, cim_dir, output_dir_match
                         try:
                             tagged_slice_i = [curr_i for curr_i, curr_slice in enumerate(first_fr_tagged) if cim_file_name in curr_slice["path"]][0]  #get the slice index from the created image pointer that matches the current slice in the cim image pointer
                         except IndexError:
-                            match = False
                             logger.error("Error Occurred\n", exc_info = True)
-                            break
+                            continue
                         tagged_slice = first_fr_tagged[tagged_slice_i]  #take tagged slice from our image pointer
                         tagged_series = ptr_content[np.logical_and(ptr_content["series"] == 1, ptr_content["slice"] == tagged_slice["slice"])] #get the whole series of that slice from the created image pointer
                         tagged_series[:]["slice"] = cim_frame_t["slice"] #replace the slice number of the tagged series with the slice number of the tagged series in the cim image pointer file
@@ -303,15 +301,20 @@ def find_matches(filepath, ptr_files_path, cim_models, cim_dir, output_dir_match
                             tagged_image_file = tagged_slice["path"].replace("IMAGEPATH", filepath[1])
                             fp = filepath[1]
                         
-                        ds_tag = pydicom.dcmread(tagged_image_file, specific_tags=["SliceLocation", "PatientPosition"])    #get the slice location from metaheader
+                        ds_tag = pydicom.dcmread(tagged_image_file, specific_tags=["SliceLocation", "PatientPosition", "SliceThickness"])    #get the slice location from metaheader
 
                         # Loop through each slice in the cine series
                         for k, frame_c in enumerate(first_fr_cine):
                             cine_image_file = frame_c["path"].replace("IMAGEPATH", fp)    #get the file path
-                            ds_cine = pydicom.dcmread(cine_image_file, specific_tags=["SliceLocation", "PatientPosition"]) #read to get slice location
+                            ds_cine = pydicom.dcmread(cine_image_file, specific_tags=["SliceLocation", "PatientPosition", "SliceThickness"]) #read to get slice location
                             if ds_tag.PatientPosition == ds_cine.PatientPosition:
+                                if ds_tag.SliceThickness != ds_tag.SliceThickness:
+                                    log_and_print("Slice Thickness not the same cine: {} | tagged: {}".format(ds_cine.SliceThickness, ds_tag.SliceThickness))
+                                    tol = min([ds_tag.SliceThickness, ds_cine.SliceThickness])//2
+                                else:
+                                    tol = ds_tag.SliceThickness//2
                                 # slice location determines whether the slices match
-                                if abs(abs(ds_tag.SliceLocation)-abs(ds_cine.SliceLocation)) <= tol:   
+                                if abs(ds_tag.SliceLocation-ds_cine.SliceLocation) <= tol:   
                                     cine_series = ptr_content[np.logical_and(ptr_content["series"] == 0, ptr_content["slice"]==frame_c["slice"])]   #get the entire cine series that matches the current tagged slice
                                     cine_series[:]["slice"] = cim_frame_t["slice"]  #replace the slice number of the current cine series with the slice number from the tagged series of the cim image pointer file
                                     if not match:  #to initialise the array to be saved later
@@ -328,12 +331,12 @@ def find_matches(filepath, ptr_files_path, cim_models, cim_dir, output_dir_match
                     if match:
                         output_array = np.append(cine_array, tagged_array)  #combine two arrays
                         # create the image pointer file containing the slices in the cine and tagged series that match
-                        logger.info("New image pointer file: {}\n".format(os.path.join(output_dir_match, output_filename)))
+                        log_and_print("New image pointer file: {}\n".format(os.path.join(output_dir_match, output_filename)))
                         np.savetxt(os.path.join(output_dir_match, output_filename), output_array, fmt="%2d\t%2d\t%2d\t%s", delimiter = "\t", header = header, comments="")
                         file_c += 1
                         match = False   #reset match status
                     else:
-                        logger.error("No match found! Patient directory: {}\n".format(os.path.dirname(cine_image_file)))
+                        log_error_and_print("No match found! Patient directory: {}\n".format(os.path.dirname(cine_image_file)))
                         continue
                     
         hrs, mins, secs = calculate_time_elapsed(start)
@@ -346,9 +349,9 @@ def find_matches(filepath, ptr_files_path, cim_models, cim_dir, output_dir_match
                             "Total elapsed time: {} hours {} minutes {} seconds\n".format(hrs, mins, secs)]
         log_and_print(output_messages)
 
-        #sendemail("adrada1213@gmail.com", "ad_rada@hotmail.com", "prepare_img_ptrs.py Program Finished", "Here's the log file:", os.path.join(os.getcwd(),logname))
+        sendemail("adrada1213@gmail.com", "ad_rada@hotmail.com", "prepare_img_ptrs.py Program Finished", "Here's the log file:", os.path.join(os.getcwd(),logname))
 
-        #os.system("shutdown -s -t 0")
+        os.system("shutdown -s -t 600")
     
     except KeyboardInterrupt:
         hrs, mins, secs = calculate_time_elapsed(start)
@@ -364,7 +367,7 @@ def find_matches(filepath, ptr_files_path, cim_models, cim_dir, output_dir_match
 
     except:
         logger.error("UNEXPECTED ERROR", exc_info = True)
-        #sendemail("adrada1213@gmail.com", "ad_rada@hotmail.com", "prepare_img_ptrs.py Program Interrupted", "Here's the log file:", os.path.join(os.getcwd(),logname))
+        sendemail("adrada1213@gmail.com", "ad_rada@hotmail.com", "prepare_img_ptrs.py Program Interrupted", "Here's the log file:", os.path.join(os.getcwd(),logname))
 
 
 def prepare_img_ptrs(basepath, filepath, suffix, cim_dir, cim_models, output_dir, output_dir_missing, output_dir_match):
@@ -450,7 +453,7 @@ if __name__ == "__main__":
     cim_models = ["CIM_DATA_AB", "CIM_DATA_EL1", "CIM_DATA_EL2", "CIM_DATA_EM", "CIM_DATA_KF", "CIM_Data_ze_1", "CIM_DATA_ze_2", "CIM_DATA_ze_3", "CIM_DATA_ze_4"]
 
     # output directory of the image pointers
-    output_dir = os.path.join(basepath, "test")
+    output_dir = os.path.join(basepath, "img_ptrs")
 
     # output directory of the image pointers with missing data
     output_dir_missing = os.path.join(output_dir, "missing")

@@ -21,8 +21,8 @@ def load_ptr_content(ptr_path):
         ptr_content = content of the image pointer as a numpy array
     '''
     # read the content of the image pointer
-    datatype = [('series', '<i4'), ('slice', '<i4'), ('index', '<i4'), ('path', 'U255')]
-    ptr_content = np.genfromtxt(ptr_path, delimiter='\t', names='series, slice, index, path', skip_header=1, dtype=datatype)
+    datatype = [('series', '<i4'), ('slice', '<i4'), ('frame', '<i4'), ('path', 'U255')]
+    ptr_content = np.genfromtxt(ptr_path, delimiter='\t', names='series, slice, frame, path', skip_header=1, dtype=datatype)
 
     return ptr_content
 
@@ -35,7 +35,7 @@ def get_slices(ptr_content):
     Output: 
         slices = the slices as an np.array 
     '''
-    slice_condition = np.logical_and(ptr_content["series"] == 0, ptr_content["index"] == 0) #condition to get only one frame for each slice
+    slice_condition = np.logical_and(ptr_content["series"] == 0, ptr_content["frame"] == 0) #condition to get only one frame for each slice
     slices = ptr_content[slice_condition]["slice"]
 
     return slices
@@ -69,10 +69,10 @@ def create_new_image_pointer(filepath, pat_name, image_path, gen_image_path, sax
     while i < len(files):
         try:
             # read the dicom file and get the series description and the instance number
-            ds = pydicom.dcmread(os.path.join(image_path,files[i]), specific_tags=["SeriesDescription", "InstanceNumber"])
+            ds = pydicom.dcmread(os.path.join(image_path,files[i]), specific_tags=["SeriesDescription", "InstanceNumber", "SeriesNumber"])
         except pydicom.errors.InvalidDicomError:
             log_error_and_print("Forcing read...")
-            ds = pydicom.dcmread(os.path.join(image_path,files[i]), force = True, specific_tags=["SeriesDescription", "InstanceNumber"])
+            ds = pydicom.dcmread(os.path.join(image_path,files[i]), force = True, specific_tags=["SeriesDescription", "InstanceNumber", "SeriesNumber"])
 
         try:    #if pydicom file does not have a series description in the header info, skip that file
             curr_series = ds.SeriesDescription
@@ -84,42 +84,36 @@ def create_new_image_pointer(filepath, pat_name, image_path, gen_image_path, sax
         if sax_cine_prefix in curr_series: #normal cines
             # we'll put the series number as 0 for the normal cines
             series_n = 0
-            try:
-                slice_n = int(curr_series[len(sax_cine_prefix):])-1 #file name is "CINE_segmented_SAX_b#", where # is the slice number
-            except ValueError:  #in some rare occassions, the series name does not match the prefix. So we try a different approach.
-                log_error_and_print("Special name case found | Patient dir: {}".format(image_path))
-                try:
-                    log_error_and_print("Trying different approach")
-                    slice_n = int(curr_series[len(sax_cine_prefix):len(curr_series)-1])-1 #file name is "CINE_segmented_SAX_b#", where # is the slice number
-                except ValueError:
-                    log_error_and_print("Issue unresolved\n")
-                    return
-                log_and_print("Issue resolved!\n")
 
-            # index will start from 0
-            index = ds.InstanceNumber-1
+            # the series number will be the slice number
+            try:
+                slice_n = ds.SeriesNumber
+            except AttributeError:
+                log_error_and_print("No series number for file {}".format(os.path.join(image_path,files[i])))
+                continue
+
+            # frame will start from 0
+            frame = ds.InstanceNumber-1
+
             # add info to list
-            cine_and_tagged.append("{:>2}\t{:>2}\t{:>2}\t{}\\{}".format(series_n, slice_n, index, gen_image_path, files[i]))
+            cine_and_tagged.append("{:>2}\t{:>2}\t{:>2}\t{}\\{}".format(series_n, slice_n, frame, gen_image_path, files[i]))
 
         elif tagged_cine_prefix in curr_series: #tagged cines
             # we'll put the series number as 1 for the normal cines
             series_n = 1
-            try:
-                slice_n = int(curr_series[len(tagged_cine_prefix):len(curr_series)-1])-1 #file name is "cine_tagging_3sl_SAX_b#s", where # is the slice number
-            except ValueError:  #in some rare occassions, the series name does not match the prefix. So we try a different approach.
-                log_error_and_print("Special name case found | Patient dir: {}".format(image_path))
-                try:
-                    log_error_and_print("Trying different approach...")
-                    slice_n = int(curr_series[len(tagged_cine_prefix):])-1
-                except ValueError:
-                    log_error_and_print("Issue unresolved\n")
-                    return
-                log_and_print("Issue resolved!\n")
 
-            # index will start from 0
-            index = ds.InstanceNumber-1
+            # the series number will be the slice number
+            try:
+                slice_n = ds.SeriesNumber
+            except AttributeError:
+                log_error_and_print("No series number for file {}".format(os.path.join(image_path,files[i])))
+                continue
+
+            # frame will start from 0
+            frame = ds.InstanceNumber-1
+
             # add info to list
-            cine_and_tagged.append("{:>2}\t{:>2}\t{:>2}\t{}\\{}".format(series_n, slice_n, index, gen_image_path, files[i]))
+            cine_and_tagged.append("{:>2}\t{:>2}\t{:>2}\t{}\\{}".format(series_n, slice_n, frame, gen_image_path, files[i]))
 
         i += 1  #increment number of files we've looped through
 
@@ -153,7 +147,7 @@ def save_image_pointer(filepath, pat_name, output_dir, image_ptr_list, suffix):
     # create the image pointer file
     with open(output_file, "w") as f:
         # header of the image pointer
-        f.write("### SeriesNum(0=normal cine, 1=tagged cine) SliceNum IndexNum Path delimiter = \"\\t\" ({}) ###\n".format(filepath))
+        f.write("Series Slice Frame Path ({})\n".format(filepath))
         for item in image_ptr_list:
             f.write("{}\n".format(item))
     # display info

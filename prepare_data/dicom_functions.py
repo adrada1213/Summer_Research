@@ -79,7 +79,7 @@ def view_images(cine_img, tagged_img):
     ax1.imshow(cine_img, cmap = 'gray')
     ax2.imshow(overlap, cmap = 'gray')
     ax3.imshow(tagged_img, cmap = 'gray')
-
+    '''
     # remove the tick marks and labels from the axes
     ax1.get_xaxis().set_visible(False)
     ax1.get_yaxis().set_visible(False)
@@ -87,6 +87,7 @@ def view_images(cine_img, tagged_img):
     ax2.get_yaxis().set_visible(False)
     ax3.get_xaxis().set_visible(False)
     ax3.get_yaxis().set_visible(False)
+    '''
 
     plt.show()
 
@@ -191,3 +192,47 @@ def get_patient_name(image_path):
         patient_name = get_patient_name(image_path)
         
     return patient_name
+
+def get_3Dcorners(image_file):
+    # initialise corners
+    tlc = []
+    trc = []
+    blc = []
+
+    # get required info from dicom header
+    ds = pydicom.dcmread(image_file)
+    img_size = ds.pixel_array.shape #(height, width)
+    img_pos = ds.ImagePositionPatient
+    img_orient = ds.ImageOrientationPatient
+    px_size = ds.PixelSpacing[0]
+    fov_x = px_size*img_size[1]
+    fov_y = px_size*img_size[0]
+
+    # calculate top left corner
+    for i in range(3):
+        tlc.append(img_pos[i]-px_size*0.5*(img_orient[i]+img_orient[i+3]))
+        trc.append(tlc[i]+fov_x*img_orient[i])
+        blc.append(tlc[i]+fov_y*img_orient[i+3])
+
+    return np.array(tlc), np.array(trc), np.array(blc), img_size
+
+def convert3D_to_2D(coords, img_size, tlc, trc, blc):
+    img_x = []
+    img_y = []
+
+    for i in range(len(coords[0])):
+        xside = np.subtract(trc, tlc)
+        yside = np.subtract(blc, tlc) #instead of tlc-blc, we do blc-tlc
+
+        r1 = img_size[1]/np.dot(xside, xside)
+        r2 = img_size[0]/np.dot(yside, yside)
+
+        point_3D = [coords[0][i],coords[1][i],coords[2][i]]
+        transform = np.subtract(np.array(point_3D), tlc) #we transform from tlc instead of blc
+
+        img_x.append(np.dot(transform, xside)*r1-0.5)
+        img_y.append(np.dot(transform, yside)*r2-0.5)
+
+    img_coords = [img_x, img_y]
+
+    return img_coords
