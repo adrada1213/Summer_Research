@@ -8,41 +8,11 @@ import pydicom
 import numpy as np
 import os
 from time import time
-from prepare_data_functions import log_and_print, log_error_and_print, calculate_time_elapsed
-
-
-def load_ptr_content(ptr_path):
-    '''
-    This functions loads the content of the image pointer
-    Input:  
-        ptr_path = path to the image pointer we want to load
-
-    Output: 
-        ptr_content = content of the image pointer as a numpy array
-    '''
-    # read the content of the image pointer
-    datatype = [('series', '<i4'), ('slice', '<i4'), ('frame', '<i4'), ('path', 'U255')]
-    ptr_content = np.genfromtxt(ptr_path, delimiter='\t', names='series, slice, frame, path', skip_header=1, dtype=datatype)
-
-    return ptr_content
-
-def get_slices(ptr_content):
-    '''
-    This function gets the slices (e.g. 0 1 2) from an image pointer
-    Input:  
-        ptr_content = content of the current pointer (can read using np.genfromtxt)
-
-    Output: 
-        slices = the slices as an np.array 
-    '''
-    slice_condition = np.logical_and(ptr_content["series"] == 0, ptr_content["frame"] == 0) #condition to get only one frame for each slice
-    slices = ptr_content[slice_condition]["slice"]
-
-    return slices
+from general_functions import log_and_print, log_error_and_print, calculate_time_elapsed
 
 def create_new_image_pointer(filepath, pat_name, image_path, gen_image_path, sax_cine_prefix, tagged_cine_prefix, output_dir, suffix):
     '''
-    TODO: Instead of taking the slice number from the series description, get the slice number from the series number
+    TODO: Instead of taking the slice number from the series description, get the slice number from the series number - DONE
 
     This function is used to create image pointers from dicom files.
     The image pointer file will have a header that describes each column in pointer file
@@ -155,3 +125,39 @@ def save_image_pointer(filepath, pat_name, output_dir, image_ptr_list, suffix):
 
     return
 
+def load_ptr_content(ptr_path):
+    '''
+    This functions loads the content of the image pointer
+    Input:  
+        ptr_path = path to the image pointer we want to load
+
+    Output: 
+        ptr_content = content of the image pointer as a numpy array
+    '''
+    # read the content of the image pointer
+    datatype = [('series', '<i4'), ('slice', '<i4'), ('frame', '<i4'), ('path', 'U255')]
+    ptr_content = np.genfromtxt(ptr_path, delimiter='\t', names='series, slice, frame, path', skip_header=1, dtype=datatype)
+
+    return ptr_content
+
+def get_slices(ptr_content):
+    '''
+    This function gets the slices (e.g. 0 1 2) from an image pointer
+    Input:  
+        ptr_content = content of the current pointer (can read using np.genfromtxt)
+
+    Output: 
+        slices = the slices as an np.array 
+    '''
+    slice_condition = np.logical_and(ptr_content["series"] == 0, ptr_content["frame"] == 0) #condition to get only one frame for each slice
+    slices = ptr_content[slice_condition]["slice"]
+
+    return slices
+
+def get_image_path(gen_imagepath, filepaths):
+    imagepath = gen_imagepath.replace("IMAGEPATH", filepaths[0])
+
+    if not(os.path.isfile(imagepath)):
+        imagepath = imagepath.replace(filepaths[0], filepaths[1])
+    
+    return imagepath

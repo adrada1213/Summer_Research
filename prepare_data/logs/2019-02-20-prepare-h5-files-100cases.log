@@ -1,0 +1,63 @@
+INFO:general_functions:====================STARTING MAIN PROGRAM====================
+INFO:general_functions:Operation started at 13:49:34.685675
+INFO:general_functions:h5 file will be stored in C:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\h5_files
+INFO:general_functions:Output filename: UK_Biobank_100cases.h5
+INFO:general_functions:Creating h5 file from 4117 pointer files
+
+INFO:general_functions:Shuffling data...
+INFO:general_functions:Obtaining data for train set
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: VS_N3_QV_22_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL2\VS_N3_QV_22_Bio_EL
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: HU_C2_CH_MJ_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_KF\HU_C2_CH_MJ_Bio_KF
+ERROR:general_functions:No landmark coordinates for 2/3 slices. Patient: C6_U5_QN_ZV_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\C6_U5_QN_ZV_Bio_EL
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: J3_YD_PZ_97_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EM\J3_YD_PZ_97_EM
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: JP_JK_3K_V4 CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL2\JP_JK_3K_V4_EL
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: HZ_5U_FE_XY CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_Data_ze_1\HZ_5U_FE_XY_ze
+ERROR:general_functions:No landmark coordinates for 2/3 slices. Patient: Q4_AB_CZ_6Q CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL2\Q4_AB_CZ_6Q_EL
+ERROR:general_functions:No landmark coordinates for 1/1 slices. Patient: 4H_YQ_65_KS CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_Data_ze_1\4H_YQ_65_KS_ze
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: J3_TH_FC_F8_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL2\J3_TH_FC_F8_Bio_EL
+ERROR:general_functions:No landmark coordinates for 2/3 slices. Patient: JU_3N_VS_5F CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_Data_ze_1\JU_3N_VS_5F_ze
+ERROR:general_functions:No landmark coordinates for 2/2 slices. Patient: HF_AH_V9_9V_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_AB\HF_AH_V9_9V_Bio-ab
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: CE_ZV_VY_SH_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_AB\CE_ZV_VY_SH_Bio-ab
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: HU_6P_2Z_VF_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EM\HU_6P_2Z_VF_EM
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: HF_2D_MV_SN_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL2\HF_2D_MV_SN_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: CN_YT_MJ_V5 CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_ze_3\CN_YT_MJ_V5_ze
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: Q8_FE_PV_4A_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_KF\Q8_FE_PV_4A_Bio_KF
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: 44_ZK_SN_SS CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_ze_2\44_ZK_SN_SS_ze
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: CA_A2_QK_YB_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\CA_A2_QK_YB_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: CN_HM_JX_E6_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EM\CN_HM_JX_E6_EM
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: VK_FB_SH_NJ_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_AB\VK_FB_SH_NJ_Bio-ab
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: J3_ED_8Z_Z2_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL2\J3_ED_8Z_Z2_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: HF_4Z_CB_TZ CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_Data_ze_1\HF_4Z_CB_TZ_ze
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: CY_CF_SH_8B CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_Data_ze_1\CY_CF_SH_8B_ze
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: CA_2C_MM_XN_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\CA_2C_MM_XN_Bio_EL
+INFO:general_functions:Finished creating train set
+INFO:general_functions:Total number of unique cases: 49
+INFO:general_functions:Total number of slices: 131
+INFO:general_functions:Elapsed time: 0.0 hours 12.0 minutes 50 seconds
+
+INFO:general_functions:Obtaining data for validation set
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: QV_S4_JV_SN_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EM\QV_S4_JV_SN_EM
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: 4H_E5_FA_AU CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_Data_ze_1\4H_E5_FA_AU_ze
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: C2_QY_HP_9T_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\C2_QY_HP_9T_Bio_EL
+INFO:general_functions:Finished creating validation set
+INFO:general_functions:Total number of unique cases: 19
+INFO:general_functions:Total number of slices: 55
+INFO:general_functions:Elapsed time: 0.0 hours 5.0 minutes 14 seconds
+
+INFO:general_functions:Obtaining data for test set
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: 48_C2_54_CS CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_ze_3\48_C2_54_CS_ze
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: 4J_83_44_7P_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_AB\4J_83_44_7P_Bio-ab
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: HB_K5_DM_U3 CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_Data_ze_1\HB_K5_DM_U3_ze
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: 6Q_FJ_2Q_7H_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\6Q_FJ_2Q_7H_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: VS_27_ZU_XS_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL2\VS_27_ZU_XS_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: 85_79_VF_S5 CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_ze_2\85_79_VF_S5_ze
+INFO:general_functions:Finished creating test set
+INFO:general_functions:Total number of unique cases: 19
+INFO:general_functions:Total number of slices: 52
+INFO:general_functions:Elapsed time: 0.0 hours 5.0 minutes 0 seconds
+
+INFO:general_functions:====================H5 FILE CREATION FINISHED!====================
+INFO:general_functions:h5 file: C:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\h5_files\UK_Biobank_100cases.h5
+INFO:general_functions:Operation finished at 2019-02-20 14:12:41.316947
+INFO:general_functions:Total elapsed time: 0.0 hours 23.0 minutes 6 seconds
+

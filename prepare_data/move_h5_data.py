@@ -2,20 +2,22 @@ import h5py
 import os
 import logging
 import numpy as np
-from prepare_data_functions import calculate_time_elapsed, log_and_print
-from prepare_h5_files import add_datasets, create_datasets, DataSetModel
+from general_functions import calculate_time_elapsed, log_and_print
+from hdf5_functions import add_datasets, create_datasets
+from prepare_h5_file import DataSetModel
 from datetime import datetime
 from time import time
 
 '''
 This function calculates the current division of data (test, train, validate) and the total
 number of slices
-Input:  h5_file = path to the h5 file
-
-Output: curr_test = current number of slices for the test group
-        curr_train = current number of slices for the train group
-        curr_val = current number of slices for the validation group
-        total = total number of slices
+Input:  
+    h5_file = path to the h5 file
+Output: 
+    curr_test = current number of slices for the test group
+    curr_train = current number of slices for the train group
+    curr_val = current number of slices for the validation group
+    total = total number of slices
 
 TODO: Need to change the way I read the groups for efficiency - DONE
 '''
@@ -381,12 +383,12 @@ if __name__ == "__main__":
     '''
     # specify where the h5 file is located
     input_dir = "C:\\Users\\arad572\\Documents\\Summer Research\\Summer Research Code\\prepare_data\\h5_files"
-    h5_filename = "UK_Biobank_20cases.h5"   #specify the filename
+    h5_filename = "UK_Biobank.h5"   #specify the filename
     h5_file = os.path.join(input_dir, h5_filename) 
 
     # specify where you want to put the new h5 file
-    #output_dir = "F:\\cine-machine-learning\\dataset"
-    output_dir = "C:\\Users\\arad572\\Documents\\Summer Research\\Summer Research Code\\prepare_data\\h5_files"
+    output_dir = "F:\\cine-machine-learning\\dataset"
+    #output_dir = "C:\\Users\\arad572\\Documents\\Summer Research\\Summer Research Code\\prepare_data\\h5_files"
     new_h5_filename = "{}_new.h5".format(h5_filename.replace(".h5", ""))   #specify the new filename
     new_h5_file = os.path.join(output_dir, new_h5_filename)
         
@@ -394,7 +396,7 @@ if __name__ == "__main__":
     ratio = [0.2, 0.6, 0.2]
 
     # change to False if you don't want to keep the old h5 file
-    del_old = True
+    del_old = False
 
     if h5_file == new_h5_file:
         print("Please specify a different output filename/path")

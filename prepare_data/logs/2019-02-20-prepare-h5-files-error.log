@@ -1,0 +1,111 @@
+INFO:general_functions:====================STARTING MAIN PROGRAM====================
+INFO:general_functions:Operation started at 14:19:00.494288
+INFO:general_functions:h5 file will be stored in C:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\h5_files
+INFO:general_functions:Output filename: UK_Biobank.h5
+INFO:general_functions:Creating h5 file from 4117 pointer files
+
+INFO:general_functions:Shuffling data...
+INFO:general_functions:Obtaining data for train set
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: J7_34_AF_F3 CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_ze_3\J7_34_AF_F3_ze
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: H3_UF_3U_3Y CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_ze_3\H3_UF_3U_3Y_ze
+ERROR:general_functions:No landmark coordinates for 2/3 slices. Patient: 89_4Q_E8_HK_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\89_4Q_E8_HK_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: 48_23_QQ_DS_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\48_23_QQ_DS_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: 48_2A_PH_7X_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\48_2A_PH_7X_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: 8K_2J_9K_3T_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\8K_2J_9K_3T_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: 8X_E7_HP_7E CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_ze_3\8X_E7_HP_7E_ze
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: 4H_HP_8U_Z9_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_ze_2\4H_HP_8U_Z9_Bio_ze
+ERROR:general_functions:No landmark coordinates for 2/3 slices. Patient: CA_N2_NQ_4V_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\CA_N2_NQ_4V_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: CN_6D_QH_XY CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_ze_3\CN_6D_QH_XY_ze
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: CY_CF_SH_8B CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_Data_ze_1\CY_CF_SH_8B_ze
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: J3_T5_X3_PX_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_AB\J3_T5_X3_PX_Bio-ab
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: 6H_2P_KB_XV_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\6H_2P_KB_XV_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: CT_U7_XX_QF CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_Data_ze_1\CT_U7_XX_QF_ze
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: 4V_8C_HV_PB_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\4V_8C_HV_PB_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: HP_S3_AP_XT_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_KF\HP_S3_AP_XT_Bio_KF
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: PS_TX_KC_Z6 CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_Data_ze_1\PS_TX_KC_Z6_ze
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: CT_Z9_VZ_E9_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\CT_Z9_VZ_E9_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: 89_VV_Y8_X5_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_KF\89_VV_Y8_X5_Bio_KF
+ERROR:general_functions:No landmark coordinates for 2/3 slices. Patient: AX_QF_C6_XX_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_KF\AX_QF_C6_XX_Bio_KF
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: Q4_JE_CE_B3_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_KF\Q4_JE_CE_B3_Bio_KF
+ERROR:general_functions:No landmark coordinates for 2/3 slices. Patient: J7_54_KT_37_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_KF\J7_54_KT_37_Bio_KF
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: CA_TE_FX_3T_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\CA_TE_FX_3T_Bio_EL
+ERROR:general_functions:No landmark coordinates for 2/3 slices. Patient: HZ_UE_E6_J5_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_KF\HZ_UE_E6_J5_Bio_KF
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: QC_NA_B3_Q5 CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_Data_ze_1\QC_NA_B3_Q5_ze
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: Q8_M3_BA_N6 CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_ze_3\Q8_M3_BA_N6_ze
+ERROR:general_functions:No landmark coordinates for 2/3 slices. Patient: 48_2J_ET_3D CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_Data_ze_1\48_2J_ET_3D_ze
+ERROR:general_functions:No landmark coordinates for 2/2 slices. Patient: JB_T8_KY_5F_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL2\JB_T8_KY_5F_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: JP_6A_Z3_DT_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_AB\JP_6A_Z3_DT_Bio-ab
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: 85_76_HM_8N_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\85_76_HM_8N_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: 44_KV_TU_A7 CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_Data_ze_1\44_KV_TU_A7_ze
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: H7_VF_KC_D8_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_KF\H7_VF_KC_D8_Bio_KF
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: HB_M4_ZQ_EE_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EM\HB_M4_ZQ_EE_EM
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: 4C_M3_UC_QV_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\4C_M3_UC_QV_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: 4M_8P_AM_J9 CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_ze_3\4M_8P_AM_J9_ze
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: QH_F9_KA_ZN_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL2\QH_F9_KA_ZN_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: JZ_44_SY_K5_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL2\JZ_44_SY_K5_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: 8M_QJ_C8_8Y_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\8M_QJ_C8_8Y_Bio_EL
+ERROR:general_functions:No landmark coordinates for 3/3 slices. Patient: 4Q_M2_VX_YX CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_ze_2\4Q_M2_VX_YX_ze
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: QQ_Y5_K6_Z4_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL2\QQ_Y5_K6_Z4_Bio_EL
+ERROR:general_functions:No landmark coordinates for 1/3 slices. Patient: JP_8S_UU_K3_Bio CIM Path: C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL2\JP_8S_UU_K3_Bio_EL
+ERROR:general_functions:No landmark coordinates for slice 0 frame 16 CIM Path C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\8M_TP_2A_82_Bio_EL
+ERROR:general_functions:No landmark coordinates for slice 0 frame 17 CIM Path C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\8M_TP_2A_82_Bio_EL
+ERROR:general_functions:No landmark coordinates for slice 0 frame 18 CIM Path C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\8M_TP_2A_82_Bio_EL
+ERROR:general_functions:No landmark coordinates for slice 0 frame 19 CIM Path C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\8M_TP_2A_82_Bio_EL
+ERROR:general_functions:No landmark coordinates for slice 0 frame 20 CIM Path C:\Users\arad572\Downloads\all CIM\CIM_DATA_EL1\8M_TP_2A_82_Bio_EL
+ERROR:__main__:UNEXPECTED ERROR
+Traceback (most recent call last):
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 361, in <module>
+    prepare_h5_files(filepaths, ptr_files_path, cvi42_path, LVModel_path, mapping_file, cim_patients, output_dir, output_filename, num_cases)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 314, in prepare_h5_files
+    create_h5_file(filepaths, ptr_files_path, cvi42_path, LVModel_path, f_ids, p_ids, cim_patients, output_dir, output_filename, dataset_dict)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 244, in create_h5_file
+    get_all_data(dsm, filepaths, ptr_files_path, cvi42_path, LVModel_path, f_ids, p_ids, cim_patients, ptr)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 215, in get_all_data
+    dsm.tagged_landmark_coords = np.append(dsm.tagged_landmark_coords, [tagged_landmark_coords], axis = 0)
+  File "C:\Anaconda\lib\site-packages\numpy\lib\function_base.py", line 4528, in append
+    return concatenate((arr, values), axis=axis)
+ValueError: all the input array dimensions except for the concatenation axis must match exactly
+
+Traceback (most recent call last):
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 384, in <module>
+    prepare_h5_files(filepaths, ptr_files_path, cvi42_path, LVModel_path, mapping_file, cim_patients, output_dir, output_filename, num_cases)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 337, in prepare_h5_files
+    create_h5_file(filepaths, ptr_files_path, cvi42_path, LVModel_path, f_ids, p_ids, cim_patients, output_dir, output_filename, dataset_dict)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 267, in create_h5_file
+    get_all_data(dsm, filepaths, ptr_files_path, cvi42_path, LVModel_path, f_ids, p_ids, cim_patients, ptr)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 233, in get_all_data
+    dsm.cine_landmark_coords = np.append(dsm.cine_landmark_coords, [cine_landmark_coords], axis = 0)
+  File "C:\Anaconda\lib\site-packages\numpy\lib\function_base.py", line 4528, in append
+    return concatenate((arr, values), axis=axis)
+ValueError: all the input array dimensions except for the concatenation axis must match exactly
+
+Traceback (most recent call last):
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 392, in <module>
+    prepare_h5_files(filepaths, ptr_files_path, cvi42_path, LVModel_path, mapping_file, cim_patients, output_dir, output_filename, num_cases)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 338, in prepare_h5_files
+    create_h5_file(filepaths, ptr_files_path, cvi42_path, LVModel_path, f_ids, p_ids, cim_patients, output_dir, output_filename, dataset_dict)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 268, in create_h5_file
+    get_all_data(dsm, filepaths, ptr_files_path, cvi42_path, LVModel_path, f_ids, p_ids, cim_patients, ptr)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 206, in get_all_data
+    cine_images, cine_dicom_paths, cine_centroid, cine_es_index, cine_landmark_coords = get_cine_data(ptr_content, ptr_slice, cvi42_path, LVModel_path, folder_id, global_landmarks, es_index, filepaths)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 83, in get_cine_data
+    epi_contours = get_contour_points(cvi42_path, folder_id, ptr_content, slice_num)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\cvi42_functions.py", line 29, in get_contour_points
+    root = get_root(cvi42_path, cvi42_id)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\cvi42_functions.py", line 20, in get_root
+    cvi42_file = load_cvi42_content(zip_path, cvi42_id)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\cvi42_functions.py", line 65, in load_cvi42_content
+    with open(zip_path, "rb") as zip_file:
+FileNotFoundError: [Errno 2] No such file or directory: "E:\\ContourFiles\\CVI42\\doesn't exist_cvi42.zip"
+Traceback (most recent call last):
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 396, in <module>
+    prepare_h5_files(filepaths, ptr_files_path, cvi42_path, LVModel_path, mapping_file, cim_patients, output_dir, output_filename, num_cases)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 342, in prepare_h5_files
+    create_h5_file(filepaths, ptr_files_path, cvi42_path, LVModel_path, f_ids, p_ids, cim_patients, output_dir, output_filename, dataset_dict)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 272, in create_h5_file
+    get_all_data(dsm, filepaths, ptr_files_path, cvi42_path, LVModel_path, f_ids, p_ids, cim_patients, ptr)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 212, in get_all_data
+    tagged_images, tagged_dicom_paths, tagged_centroid, tagged_es_index, tagged_landmark_coords = get_tagged_data(ptr_content, ptr_slice, global_landmarks, es_index, filepaths)
+  File "c:\Users\arad572\Documents\Summer Research\Summer Research Code\prepare_data\prepare_h5_file.py", line 141, in get_tagged_data
+    stacked_landmarks = np.stack((global_landmarks[fr["frame"]][0], global_landmarks[fr["frame"]][1], global_landmarks[fr["frame"]][2]), axis=-1)
+IndexError: list index out of range

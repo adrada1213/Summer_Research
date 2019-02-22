@@ -1,16 +1,15 @@
 """
 This python file prepares the image pointers. In the patient folder, the dicom files are not in order that's why we 
-need to create the image pointers. The image pointers will serve as a mapping file the the dicom images inside the 
-patient folders. Only the image paths for the cine and tagged series will be included in the image pointers. Each 
-series has different number of slices, each slices have multiple frames; usually 50 for cine series, and 20 for 
-tagged series. 
+need to create the image pointers. The image pointers will serve as a mapping file. Only the image paths for the 
+cine and tagged series will be included in the image pointers. Each series has different number of slices, each 
+slices have multiple frames; usually 50 for cine series, and 20 for tagged series. 
 
 The preparation of image pointers is divided into three steps:
     1. Creation of image pointer for all patients
     2. Moving the image pointers that have missing tagged series
     3. Finding the matching slices between the cine and tagged series
 Author: Amos Rada
-Date(Last edit): 22/01/2019   
+Date(Last edit): 19/02/2019   
 """
 
 # import needed libraries
@@ -21,44 +20,29 @@ import numpy as np
 import pydicom
 from datetime import datetime
 from time import time
-from prepare_data_functions import sendemail, get_pointer_paths, calculate_time_elapsed, log_and_print, log_error_and_print
+import sys
+# import from created functions
+from general_functions import sendemail, calculate_time_elapsed, log_and_print, log_error_and_print, prompt_user
+from cim_functions import get_pointer_paths
 from dicom_functions import get_patient_name
-from pointer_functions import create_new_image_pointer, load_ptr_content
+from image_pointer_functions import create_new_image_pointer, load_ptr_content
 
 # initialise logger
 logger = logging.getLogger(__name__)
 
-def prompt_user():
-    '''
-    Prompts user to enter which functions they want to use
-    Output:
-        steps(list) = the number of the function that the user wants to use
-    '''
-    print("Function 1: Create image pointers")
-    print("Function 2: Move image pointers with missing data")
-    print("Function 3: Find matches between series of interest")
-    try:
-        steps = [int(s) for s in input("Enter the function(s) you want to use (separated by space): ").split()]
-        steps.sort()
-        print()
-    except ValueError:
-        print()
-        print("Invalid values entered")
-        print("Please enter values from 1 to 3 separate by a space")
-        steps = prompt_user()
-    
-    return steps
-
 def create_img_ptrs(filepath, output_dir, suffix):
     '''
     Step 1: Prepare all the image pointers
+    This will loop through the folders containing the multipatient/singlepatient folders which contains
+    patient folders. The program will loop through each dicom file in every patient folder, and creates an
+    image pointer containing the series number, slice number, frame number, and path to the dicom files 
+    included in the cine and tagged series.
     Inputs: 
-        filepath(list) = the filepaths containing the multipatient folders
-        output_dir(string) = where the image pointers will be stored
-        suffix(string) = the text and file extension after the patient name
-    
+        filepath (list) = the filepaths containing the multipatient folders
+        output_dir (string) = where the image pointers will be stored
+        suffix (string) = the text and file extension after the patient name
     Outputs:
-        None, it creates image pointers
+        None. it creates image pointers (e.g. 2B_7E_4F_8J_Bio_cine_and_tagged.img_imageptr)
     '''
     start = time() #start time for this function
     output_messages = ["====================CREATING IMAGE POINTERS====================",
@@ -81,7 +65,9 @@ def create_img_ptrs(filepath, output_dir, suffix):
     log_and_print(["Storing image pointer files in {}\n".format(output_dir)])
     try:
         i = -1
+        # loop through the filepaths in the list containing the multipatient folders
         for fp in filepath:
+            # loop through each folder, and subfolders in the current directory
             for root, _, files in os.walk(fp):
                 images = []
                 # check if folder contains .dcm files. If yes, the current folder is a patient folder
@@ -135,16 +121,20 @@ def create_img_ptrs(filepath, output_dir, suffix):
                             "Last iteration info: Patient#{} {}".format(i, patient_name),
                             "Total elapsed time: {} hours {} minutes {} seconds\n".format(hrs, mins, secs)]
         log_and_print(output_messages)
+        sys.exit()
 
 def move_img_ptrs(ptr_path, output_dir_missing, suffix):
     '''
-    Step 2: Move image pointers with missing data (no tagged series) to a separate folder
+    Step 2: Move image pointers with missing data (no tagged series) to a separate folder.
+    Some image pointers created don't have tagged series in them. Without the tagged series, we can't really 
+    know which tagged slice matches the cine slice for that patient. This function will move those image
+    pointers to a different folder since we don't want those patients without the tagged series.
     Inputs:
-        ptr_path(string) = path to all the image pointers
-        output_dir_missing(string) = where the image pointers with missing data will be moved to
-        suffix(string) = text and file extension after the patient name
+        ptr_path (string) = path to all the image pointers
+        output_dir_missing (string) = where the image pointers with missing data will be moved to
+        suffix (string) = text and file extension after the patient name
     Output:
-        None, moves image pointers
+        None. moves image pointers
     '''
     start = time() #timekeeping
     output_messages = ["====================MOVING IMAGE POINTERS====================",
@@ -196,20 +186,24 @@ def move_img_ptrs(ptr_path, output_dir_missing, suffix):
                             "Number of pointer files moved during operation: {}".format(initial_moved_c-moved_c),
                             "Total elapsed time: {} hours {} minutes {} seconds".format(hrs, mins, secs)]
         log_and_print(output_messages)
-        logger.error("Unexpected error occured at {}\n".format(str(datetime.now())), exc_info=True)
+        sys.exit()
 
 def find_matches(filepath, ptr_files_path, cim_models, cim_dir, output_dir_match, suffix):
     '''
     Step 3: Find the slices in the cine series that match the slices in the tagged series
+    This function creates image pointers containing the matching tagged and cine slices. The order of the slices
+    will be based on the image pointers in the cim folders (since we're getting the landmarks from those folders, we
+    want to match how they ordered their slices). This will exclude patients with no folder in the cim models, and patients
+    with no image pointers in the cim models.
     Inputs:
-        filepath(list) = paths to the multipatient folders
-        ptr_files_path(list) = path to the image pointers
-        cim_models(list) = list of the names of the cim models
-        cim_dir(string) = folder containing the cim models
-        output_dir_match(string) = where the image pointers with matching slice will be saved
-        suffix(string) = text and file extension that will be added after the patient name (e.g. _cine_and_tagged.img_imageptr)
+        filepath (list) = paths to the multipatient folders
+        ptr_files_path (list) = path to the image pointers
+        cim_models (list) = list of the names of the cim models
+        cim_dir (string) = folder containing the cim models
+        output_dir_match (string) = where the image pointers with matching slice will be saved
+        suffix (string) = text and file extension that will be added after the patient name (e.g. _match.img_imageptr)
     Output:
-        None, creates image pointers with matching slices
+        None. creates image pointers with matching slices (2B_7E_4F_8J_Bio_match.img_imageptr)
     '''
     start = time() #timekeeping
     output_messages = ["====================FINDING MATCHES====================",
@@ -249,16 +243,11 @@ def find_matches(filepath, ptr_files_path, cim_models, cim_dir, output_dir_match
                 if output_filename not in match_ip:    
                     try:
                         #get the cim pointer path of current patient
-                        cim_ptr_path = [cim_ptr for cim_ptr in cim_ptr_files if patient_name.lower() in cim_ptr.lower()][0] 
-                        log_and_print("Patient#{}: {} - CIM image pointer found: {}".format(i+1, patient_name, cim_ptr_path))
-                    except IndexError: 
-                        try:
-                            #get the cim pointer path of current patient
-                            cim_ptr_path = [cim_ptr for cim_ptr in cim_ptr_files if patient_name.lower().replace("_bio", "") in cim_ptr.lower()][0] 
-                            log_and_print("Patient#{}: {} - CIM image pointer found: {}".format(i+1, patient_name, cim_ptr_path))
-                        except IndexError:    
-                            log_error_and_print("Patient#{}: {} - No image pointer file found in the CIM folders\n".format(i+1, patient_name))
-                            continue
+                        cim_ptr_path = [cim_ptr for cim_ptr in cim_ptr_files if patient_name.lower().replace("_bio", "") in cim_ptr.lower()][0] 
+                        #log_and_print("Patient#{}: {} - CIM image pointer found: {}".format(i+1, patient_name, cim_ptr_path))
+                    except IndexError:    
+                        log_error_and_print("Patient#{}: {} - No image pointer file found in the CIM folders\n".format(i+1, patient_name))
+                        continue
                     
                     # reading the content of the pointer file (cine_and_tagged, and cim)
                     ptr_content = load_ptr_content(ptr_path)
@@ -287,12 +276,7 @@ def find_matches(filepath, ptr_files_path, cim_models, cim_dir, output_dir_match
                         tagged_slice = first_fr_tagged[tagged_slice_i]  #take tagged slice from our image pointer
                         tagged_series = ptr_content[np.logical_and(ptr_content["series"] == 1, ptr_content["slice"] == tagged_slice["slice"])] #get the whole series of that slice from the created image pointer
                         tagged_series[:]["slice"] = cim_frame_t["slice"] #replace the slice number of the tagged series with the slice number of the tagged series in the cim image pointer file
-                        '''
-                        if j == 0:  #to initialise the array to be saved later
-                            tagged_array = tagged_series.flatten()
-                        else:
-                            tagged_array = np.append(tagged_array, tagged_series.flatten())
-                        '''
+
                         first_fr_tagged = np.delete(first_fr_tagged, tagged_slice_i)    #delete added slice to reduce computational time
                         
                         tagged_image_file = tagged_slice["path"].replace("IMAGEPATH", fp)
@@ -349,9 +333,9 @@ def find_matches(filepath, ptr_files_path, cim_models, cim_dir, output_dir_match
                             "Total elapsed time: {} hours {} minutes {} seconds\n".format(hrs, mins, secs)]
         log_and_print(output_messages)
 
-        sendemail("adrada1213@gmail.com", "ad_rada@hotmail.com", "prepare_img_ptrs.py Program Finished", "Here's the log file:", os.path.join(os.getcwd(),logname))
+        #sendemail("adrada1213@gmail.com", "ad_rada@hotmail.com", "prepare_img_ptrs.py Program Finished", "Here's the log file:", os.path.join(os.getcwd(),logname))
 
-        os.system("shutdown -s -t 600")
+        #os.system("shutdown -s -t 600")
     
     except KeyboardInterrupt:
         hrs, mins, secs = calculate_time_elapsed(start)
@@ -364,10 +348,12 @@ def find_matches(filepath, ptr_files_path, cim_models, cim_dir, output_dir_match
                             "Last iteration info: Patient#{} {}".format(i, patient_name),
                             "Total elapsed time: {} hours {} minutes {} seconds\n".format(hrs, mins, secs)]
         log_and_print(output_messages)
+        sys.exit()
 
     except:
         logger.error("UNEXPECTED ERROR", exc_info = True)
-        sendemail("adrada1213@gmail.com", "ad_rada@hotmail.com", "prepare_img_ptrs.py Program Interrupted", "Here's the log file:", os.path.join(os.getcwd(),logname))
+        #sendemail("adrada1213@gmail.com", "ad_rada@hotmail.com", "prepare_img_ptrs.py Program Interrupted", "Here's the log file:", os.path.join(os.getcwd(),logname))
+        sys.exit()
 
 
 def prepare_img_ptrs(basepath, filepath, suffix, cim_dir, cim_models, output_dir, output_dir_missing, output_dir_match):
@@ -388,43 +374,29 @@ def prepare_img_ptrs(basepath, filepath, suffix, cim_dir, cim_models, output_dir
     # prompt the user which functions they want to use
     steps = prompt_user()
 
-    try:
-        for s in steps:
-            if s == 1:
-                try:
-                    create_img_ptrs(filepath, output_dir, suffix)
-                except KeyboardInterrupt:
-                    break
-            if s == 2:
-                try:
-                    move_img_ptrs(output_dir, output_dir_missing, suffix)
-                except KeyboardInterrupt:
-                    break
-            if s == 3:
-                try:
-                    find_matches(filepath, output_dir, cim_models, cim_dir, output_dir_match, suffix)
-                except KeyboardInterrupt:
-                    break
-        
-        # Timekeeping
-        hrs, mins, secs = calculate_time_elapsed(start_)
-        output_messages = ["====================MAIN PROGRAM FINISHED!====================",
-                            "Total elapsed time: {} hours {} minutes {} seconds\n".format(hrs, mins, secs)]
-        log_and_print(output_messages)
-
-    except KeyboardInterrupt:
-        print("Operation Interrupted")
-        print("Log file stored in: {}".format(os.path.join(basepath,logname)))
+    for s in steps:
+        if s == 1:
+            create_img_ptrs(filepath, output_dir, suffix)
+        if s == 2:
+            move_img_ptrs(output_dir, output_dir_missing, suffix)
+        if s == 3:
+            find_matches(filepath, output_dir, cim_models, cim_dir, output_dir_match, suffix)
+    
+    # Timekeeping
+    hrs, mins, secs = calculate_time_elapsed(start_)
+    output_messages = ["====================MAIN PROGRAM FINISHED!====================",
+                        "Total elapsed time: {} hours {} minutes {} seconds\n".format(hrs, mins, secs)]
+    log_and_print(output_messages)
 
 if __name__ == "__main__":
     '''
     Calls the main function (prepare_image_ptrs)
     To be modified by user: 
-        basepath = where you want the image pointers to be stored
-        filepath = where the multipatient folders are stored (even if there's only one path, put it in a list)
-        suffix = text and file extension that will be added after the patient name (e.g. _cine_and_tagged.img_imageptr)
-        cim_dir = where the cim folders are located
-        cim_models = names of the cim models (as a list)        
+        basepath (string) = where you want the image pointers to be stored
+        filepaths (list of strings) = where the multipatient folders are stored (even if there's only one path, put it in a list (i.e. []))
+        suffix (string) = text and file extension that will be added after the patient name (e.g. _cine_and_tagged.img_imageptr)
+        cim_dir (string) = where the cim folders are located
+        cim_models (list of string) = names of the cim models (as a list)
     '''
 
     # logging info
@@ -443,7 +415,7 @@ if __name__ == "__main__":
     #basepath = "" #uncomment and specify if you want the basepath to be different from the working directory
 
     # where the multipatient folders are stored
-    filepath = ["E:\\Original Images\\2014", "E:\\Original\\Images\\2015"]
+    filepaths = ["E:\\Original Images\\2014", "E:\\Original Images\\2015"]
 
     # output image pointer file suffix
     suffix = "_cine_and_tagged.img_imageptr"
@@ -462,4 +434,4 @@ if __name__ == "__main__":
     output_dir_match = os.path.join(output_dir, "matches")
 
     # main function to prepare image pointers
-    prepare_img_ptrs(basepath, filepath, suffix, cim_dir, cim_models, output_dir, output_dir_missing, output_dir_match)
+    prepare_img_ptrs(basepath, filepaths, suffix, cim_dir, cim_models, output_dir, output_dir_missing, output_dir_match)
