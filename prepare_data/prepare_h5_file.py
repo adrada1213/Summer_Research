@@ -1,24 +1,27 @@
 '''
 This python program creates an h5 file containing train, test, and validation set for the deep learning networks.
-The sets are divided based on the number of patients (not the slices)
-Each set will contain:  (N = Number of slices)
-    Patients        -   the name of the patients    (N)
-    Slices          -   the slice number that was added for the matching patient    (N)
-    Cine Group:
-     +Images        -   The dicom images/frames for the matching slice  (N X 50)
-     +Dicom paths-  -   General image paths to the dicom images (e.g. IMAGEPATH\MultiPatient2015...\...)    (N x 50)
-     +Centroids     -   The x, y coords of the centre of the left ventricle for each slice, with half the length of the edge    (N x 3)
-     +Landmarks     -   converted global landmarks from cim (N x 2 x 2 x 168)
-     +ES_index      -   index of the frame showing end systole  (N)
-    Tagged Group:
-     +Images        -   The dicom images/frames for the tagged slices   (N)
-     +Dicom paths-  -   General image paths to the dicom images (e.g. IMAGEPATH\MultiPatient2015...\...)    (N x 20)
-     +Centroids     -   The x, y coords of the centre of the left ventricle for each slice, with half the length of the edge    (N x 3)
-     +Landmarks     -   converted global landmarks from cim (N x 20 x 2 x168)
-     +ES_index      -   index of the frame showing end systole  (N)
+The sets are divided based on the number of patients (not the slices).
 
+Note: After the creation of the h5 file, use the move_h5_data.py program to correctly divide train, test, and 
+validation sets.
+Each set will contain:  
+    patients        -   the name of the patients    (N)
+    slices          -   the slice number that was added for the matching patient    (N)
+    Cine Group:
+     +images            -   The dicom images/frames for the matching slice  (N X 50)
+     +dicom_paths-      -   General image paths to the dicom images (e.g. IMAGEPATH\MultiPatient2015...\...)    (N x 50)
+     +centroids         -   The x, y coords of the centre of the left ventricle for each slice, with half the length of the edge    (N x 3)
+     +landmark_coords   -   converted global landmarks from cim (N x 2 x 2 x 168)
+     +es_indices        -   indices of the frames showing end systole  (N)
+    Tagged Group:
+     +images            -   The dicom images/frames for the tagged slices   (N)
+     +dicom_paths-      -   General image paths to the dicom images (e.g. IMAGEPATH\MultiPatient2015...\...)    (N x 20)
+     +centroids         -   The x, y coords of the centre of the left ventricle for each slice, with half the length of the edge    (N x 3)
+     +landmark_coords   -   converted global landmarks from cim (N x 20 x 2 x168)
+     +es_indices        -   indices of the frames showing end systole  (N)
+    (N = Number of slices)
 Author: Amos Rada
-Date:   21/02/2019
+Date:   25/02/2019
 '''
 # import needed libraries
 import h5py
@@ -493,15 +496,15 @@ if __name__ == "__main__":
     '''
     Calls the main function (prepare_h5_file)
     To be modified by user: 
-        logname (string) = the name for you log file
+        logname (string) = the name of your log file
         filepaths (list of strings) = where the multipatient folders are stored (even if there's only one path, put it in a list (i.e. []))
         ptr_files_path (string) = where the image pointers CONTAINING THE MATCHING slices are stored
-        cvi42_path (string) = where the zip files containing the contour are stored
+        cvi42_path (string) = where the zip files containing the contours are stored
         LVModel_path (string) = where the LVModeller folders are stored (contains the ED and ES GP and SliceInfoFiles)
-        mapping_file (string) = directory to the confidential mapping file
+        mapping_file (string) = directory to the confidential mapping file (maps folder id and patient id)
         cim_dir (string) = where the cim models are stored
         cim_models (list of strings) = names of the cim models (as a list)
-        num_cases (int or None) = number of cases you want to add to the h5 file (put None if you want all)
+        num_cases (int or None) = number of cases you want to add to the h5 file (put None if you want to add all)
         output_dir (string) = where you want the h5 file to be stored
     '''
     # start logging
@@ -517,7 +520,7 @@ if __name__ == "__main__":
     filepaths = ["E:\\Original Images\\2014", "E:\\Original Images\\2015"]
 
     # where the pointer files with matching series and cim files
-    ptr_files_path = "C:\\Users\\arad572\\Documents\\Summer Research\\Summer Research code\\prepare_data\\img_ptrs\\matches"
+    ptr_files_path = "C:\\Users\\arad572\\Documents\\Summer Research\\Summer Research Data\\img_ptrs\\matches"
 
     # specify CVI42 filepath
     cvi42_path = "E:\\ContourFiles\\CVI42"
@@ -539,7 +542,7 @@ if __name__ == "__main__":
     num_cases = None
 
     # where h5 files will be stored
-    output_dir = os.path.join(os.getcwd(), "h5_files")
+    output_dir = "C:\\Users\\arad572\\Documents\\Summer Research\\Summer Research Data\\h5_files"
 
     # name of the h5file
     if num_cases is not None:
@@ -547,6 +550,7 @@ if __name__ == "__main__":
     else:
         output_filename = "UK_Biobank.h5"
 
+    # if h5 file already exists, prompt the user if they want to overwrite the h5 file
     if os.path.isfile(os.path.join(output_dir, output_filename)):
         overwrite = input("{} already exists. Do you want to overwrite the file? (Y or N): ".format(output_filename))
         if overwrite.lower() == "y":

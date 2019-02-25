@@ -18,15 +18,14 @@ def create_new_image_pointer(filepath, pat_name, image_path, gen_image_path, sax
     The image pointer file will have a header that describes each column in pointer file
     Column 1 - Series Number (0-cine, 1-tagged), Column 2 - Slice Number, Column 3 - Index (which frame the image is in the current slice), Column 4 - general image path
     Inputs:
-        filepath(string) = where the multipatient folders are stored
-        pat_name(string) = name of the patient (from dicom header)
-        image_path(string) = path to the .dcm files
-        gen_image_path(string) = general path to the .dcm files (the filepath in the string is replace by "IMAGEPATH")
-        sax_cine_prefix(string) = what the normal cine series name starts with
-        tagged_cine_prefix(string) = what the tagged series name starts with
-        output_dir(string) = where the image pointers will be saved
-        suffix(string) = text and file extension after the patient name
-    
+        filepath (string) = where the multipatient folders are stored
+        pat_name (string) = name of the patient (from dicom header)
+        image_path (string) = path to the .dcm files
+        gen_image_path (string) = general path to the .dcm files (the filepath in the string is replace by "IMAGEPATH")
+        sax_cine_prefix (string) = what the normal cine series name starts with
+        tagged_cine_prefix (string) = what the tagged series name starts with
+        output_dir (string) = where the image pointers will be saved
+        suffix (string) = text and file extension after the patient name
     Output:
         None, creates the list needed to be stored in the image pointer file
     '''
@@ -104,12 +103,11 @@ def save_image_pointer(filepath, pat_name, output_dir, image_ptr_list, suffix):
     '''
     This function will save the contents of the image pointer
     Inputs:
-        filepath(string) = path to the multipatient folders
-        pat_name(string) = name of the patient(from dicom header)
-        output_dir(string) = where the image pointers will be saved
-        image_path = 
+        filepath (string) = path to the multipatient folders
+        pat_name (string) = name of the patient(from dicom header)
+        output_dir (string) = where the image pointers will be saved 
         image_ptr_list(list) = contains all the ordered slices from both series of interest
-
+        suffix (string) = text and file extension after the patient name
     Output:
         None, creates image pointer
     '''
@@ -129,10 +127,9 @@ def load_ptr_content(ptr_path):
     '''
     This functions loads the content of the image pointer
     Input:  
-        ptr_path = path to the image pointer we want to load
-
+        ptr_path (string) = path to the image pointer we want to load
     Output: 
-        ptr_content = content of the image pointer as a numpy array
+        ptr_content (array) = content of the image pointer as a numpy array
     '''
     # read the content of the image pointer
     datatype = [('series', '<i4'), ('slice', '<i4'), ('frame', '<i4'), ('path', 'U255')]
@@ -144,10 +141,9 @@ def get_slices(ptr_content):
     '''
     This function gets the slices (e.g. 0 1 2) from an image pointer
     Input:  
-        ptr_content = content of the current pointer (can read using np.genfromtxt)
-
+        ptr_content (array) = content of the current pointer (can read using np.genfromtxt)
     Output: 
-        slices = the slices as an np.array 
+        slices (array) = the slices as an np.array 
     '''
     slice_condition = np.logical_and(ptr_content["series"] == 0, ptr_content["frame"] == 0) #condition to get only one frame for each slice
     slices = ptr_content[slice_condition]["slice"]
@@ -155,6 +151,14 @@ def get_slices(ptr_content):
     return slices
 
 def get_image_path(gen_imagepath, filepaths):
+    '''
+    This function converts the general image path from the image pointer to the actual image path
+    Input:
+        gen_imagepath (string) = general image path from the image pointers
+        filepaths (list) = where the multipatient folders are stored
+    Output:
+        imagepath (string) = actual path to the dicom image
+    '''
     imagepath = gen_imagepath.replace("IMAGEPATH", filepaths[0])
 
     if not(os.path.isfile(imagepath)):

@@ -1,7 +1,19 @@
+"""
+This script contains functions needed to handle creation and addition of data to the h5 file.
+Author: Amos Rada
+Date:   25/02/2019
+"""
+# import libraries
 import h5py
 import numpy as np
 
 def create_datasets(hf, key, dsm):
+    '''
+    Inputs:
+        hf = opened h5 file
+        key (string) = group we want to create
+        dsm = DataSetModel
+    '''
     # create group for the current set
     grp = hf.create_group(key)
     grp_cine = grp.create_group("cine")
@@ -30,6 +42,12 @@ def create_datasets(hf, key, dsm):
     grp_tagged.create_dataset("es_indices", data=dsm.tagged_es_indices, maxshape = (None, ))
 
 def add_datasets(hf, key, dsm):
+    '''
+    Inputs:
+        hf = opened h5 file
+        key (string) = group we want to create
+        dsm = DataSetModel
+    '''
     grp = hf["//{}".format(key)]
     grp_cine = hf["//{}//cine".format(key)]
     grp_tagged = hf["//{}//tagged".format(key)]

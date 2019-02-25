@@ -1,23 +1,36 @@
+"""
+The prepare_h5_file.py program initially divides the number of patients into the ratios specified by the user. 
+However, during the extraction of data that are needed for the h5 file, we found that some patients don't have 
+global landmarks. Therefore, we skip those data since they're of no use. In addition, the number of slices for 
+each patient is not consistent (i.e. some have 1, some 2, some 3). These cause the number of slices for each group 
+(test, train, validate) to not reflect the ratio specified by the user. This program tries to correct the test, 
+train, validation ratio (based on number of slices) in the h5 file created from running the prepare_h5_file.py program.
+With this said, this program ensures that all the slices of a patient will be in one group.
+Author: Amos Rada
+Date:   25/02/2019
+"""
+# import libaries
 import h5py
 import os
 import logging
 import numpy as np
+from datetime import datetime
+from time import time
+# import from created scripts
 from general_functions import calculate_time_elapsed, log_and_print
 from hdf5_functions import add_datasets, create_datasets
 from prepare_h5_file import DataSetModel
-from datetime import datetime
-from time import time
 
 '''
 This function calculates the current division of data (test, train, validate) and the total
 number of slices
 Input:  
-    h5_file = path to the h5 file
-Output: 
-    curr_test = current number of slices for the test group
-    curr_train = current number of slices for the train group
-    curr_val = current number of slices for the validation group
-    total = total number of slices
+    h5_file (string) = path to the h5 file
+Outputs: 
+    curr_test (float) = current number of slices for the test group
+    curr_train (float) = current number of slices for the train group
+    curr_val (float) = current number of slices for the validation group
+    total (int) = total number of slices
 
 TODO: Need to change the way I read the groups for efficiency - DONE
 '''
@@ -36,12 +49,13 @@ def get_curent_ratio(h5_file):
 def calculate_targets(total, ratio):
     '''
     This function calculates the desired division of data (test, train, validate)
-    Input:  Total = total number of slices
-            ratio = expected ratio
-
-    Output: test_target = target number of slices for the test group
-            train_target = target number of slices for the train group
-            val_target = target number of slices for the validation group
+    Inputs:  
+        total (int) = total number of slices
+        ratio (list of floats) = expected ratio
+    Outputs: 
+        test_target (int) = target number of slices for the test group
+        train_target (int) = target number of slices for the train group
+        val_target (int) = target number of slices for the validation group
     '''
     test_target = int(total*ratio[0])
     train_target = int(total*ratio[1])
@@ -54,18 +68,18 @@ def calculate_differences(curr_test, curr_train, curr_val, trgt_test, trgt_train
     This function calculates the difference between the desired number of slices and the current number of slices for each group.
     (If the difference is negative, this means that the current number of slices in that data is more than the desired number of 
     slices for that data)
-    Input:  curr_test = current number of slices for the test group
-            curr_train = current number of slices for the train group
-            curr_val = current number of slices for the validation group
-            test_target = target number of slices for the test group
-            train_target = target number of slices for the train group
-            val_target = target number of slices for the validation group
-
-    Output: test_diff = difference for test group
-            train_diff = difference for train group
-            val_diff = difference for validation group
+    Inputs:  
+        curr_test (int) = current number of slices for the test group
+        curr_train (int) = current number of slices for the train group
+        curr_val (int) = current number of slices for the validation group
+        test_target (int) = target number of slices for the test group
+        train_target (int) = target number of slices for the train group
+        val_target (int) = target number of slices for the validation group
+    Outputs: 
+        test_diff (int) = difference for test group
+        train_diff (int) = difference for train group
+        val_diff (int) = difference for validation group
     '''
-
     test_diff = trgt_test-curr_test
     train_diff = trgt_train-curr_train
     val_diff = trgt_val-curr_val
@@ -75,10 +89,11 @@ def calculate_differences(curr_test, curr_train, curr_val, trgt_test, trgt_train
 def get_slice_count(h5_file, group):
     '''
     This function calculates the number of slices for each group
-    Input:  h5_file = path to h5 file
-            group = current group
-
-    Output: slice_count = slices remaining
+    Inputs:  
+        h5_file (string) = path to h5 file
+        group (string) = current group
+    Output: 
+        slice_count (int) = slices in the group
     '''
     with h5py.File(h5_file, "r") as hf:
         slice_count = np.array(hf["/{}/patients".format(group)]).shape[0]
@@ -88,11 +103,12 @@ def get_slice_count(h5_file, group):
 def add_data_to_model(dsm, grp, cine_grp, tagged_grp, start, end):
     '''
     This function adds the data needed to the model
-    Input:  dsm = DataSetModel
-            cine_grp = the cine group from h5 file
-            tagged_grp = the tagged group from h5 file
-            start = index of first slice
-            end = index of last slice
+    Inputs:  
+        dsm (class) = DataSetModel
+        cine_grp = the cine group from h5 file
+        tagged_grp = the tagged group from h5 file
+        start (int) = index of first slice
+        end (int) = index of last slice
     '''
     dsm.patient_names = np.array(grp.get("patients")[start:end])
     dsm.slices = np.array(grp.get("slices")[start:end]) 
@@ -115,13 +131,14 @@ def get_data_from_group(dsm, h5_file, group, index, slice_count):
     '''
     This function takes data from the current group. It gets the slices from the patient at the end
     and returns the index number of the first slice of that patient (from the right, as a positive number).
-    Inputs: dsm = datasetmodel
-            h5_file = path to the h5 file we;re taking data from
-            group = group we're taking data from
-            index = index of the first slice of the last patient taken (from the right)
-            slice_count = current number of slices in that group
-
-    Output: index = index of the first slice of the patient taken (from the right)
+    Inputs: 
+        dsm = DataSetmodel
+        h5_file (string) = path to the h5 file we're taking data from
+        group (string) = group we're taking data from
+        index (int) = index of the first slice of the last patient taken (from the right)
+        slice_count (int) = current number of slices in that group
+    Output: 
+        index (int) = index of the first slice of the patient taken (from the right)
     '''
     with h5py.File(h5_file, "r") as hf:
         # get the groups needed
@@ -145,9 +162,10 @@ def get_data_from_group(dsm, h5_file, group, index, slice_count):
 def create_group(dsm, new_h5_file, group):
     '''
     This function creates the group in the new h5 file
-    Input:  dsm = DataSetModel containing data to be added
-            new_h5_file = path to the new h5 file
-            group = group we're adding
+    Inputs:  
+        dsm = DataSetModel containing data to be added
+        new_h5_file (string) = path to the new h5 file
+        group (string) = group we're creating and adding data to
     '''
     with h5py.File(new_h5_file, "a") as hf:
         create_datasets(hf, group, dsm)
@@ -155,9 +173,10 @@ def create_group(dsm, new_h5_file, group):
 def add_data_to_group(dsm, new_h5_file, group):
     '''
     This adds data to the new h5 file
-    Input:  dsm = DataSetModel containing data to be added
-            new_h5_file = path to the new h5 file
-            group = group to be added
+    Inputs:  
+        dsm = DataSetModel containing data to be added
+        new_h5_file (string) = path to the new h5 file
+        group (string) = group we're adding data to
     '''
     with h5py.File(new_h5_file, "a") as hf:
         add_datasets(hf, group, dsm)
@@ -165,10 +184,11 @@ def add_data_to_group(dsm, new_h5_file, group):
 def get_data_for_group(dsm, h5_file, group, start, end):
     '''
     This reads the old h5 file and gets the data for all the slices for the current patient
-    Input:  h5_file = old h5 file path
-            group = group that we're copying 
-            start = index of the first slice for the current patient
-            end = index of the last slice for the current patient
+    Inputs:  
+        h5_file (string) = old h5 file path
+        group (string) = group that we're copying 
+        start (int) = index of the first slice for the current patient
+        end (int) = index of the last slice for the current patient
     '''
     with h5py.File(h5_file, "r") as hf:
         # get the groups needed
@@ -181,11 +201,12 @@ def get_data_for_group(dsm, h5_file, group, start, end):
 def copy_h5_data(h5_file, new_h5_file, group, init, limit):
     '''
     This function copies h5 data from old h5 file to the new h5 file
-    Input:  h5_file = path to the old h5 file
-            new_h5_file = path to the new h5 file
-            group = group we're copying
-            init = whether the h5 file is already created or not
-            limit = index of the last slice we want to add (from the right)
+    Inputs:  
+        h5_file (string) = path to the old h5 file
+        new_h5_file (string) = path to the new h5 file
+        group (string) = group we're copying
+        init (True or False) = whether the h5 file is already created or not
+        limit (int) = index of the last slice we want to add (from the right)
     '''
     if init:    #to create the file
         hf = h5py.File(new_h5_file, "w")
@@ -201,7 +222,7 @@ def copy_h5_data(h5_file, new_h5_file, group, init, limit):
     slice_cnt = get_slice_count(h5_file, group) #get the slice count
     if limit is not None:   #if the last index(from the right) is specified
         slice_cnt = slice_cnt - (limit-1) 
-    for i in range(0,slice_cnt,5):    #loop through the data in small increments to not overload the memory(if we have huge h5 files)
+    for i in range(0,slice_cnt,5):    #loop through the data in small increments to not overload the memory(if we have huge h5 file)
         dsm = DataSetModel()
         if (slice_cnt - i) < 5:   #if we've reached the end of the data
             get_data_for_group(dsm, h5_file, group, i, slice_cnt)  #getting data for the group
@@ -218,9 +239,10 @@ def copy_h5_data(h5_file, new_h5_file, group, init, limit):
 def move_h5_data(h5_file, new_h5_file, ratio):
     '''
     This is the main function
-    Inputs: h5_file = path to the h5 file we want to modify
-            new_h5_file = path to the new h5 file we want to create
-            ratio = test:train:validation ratio as a list 
+    Inputs: 
+        h5_file (string) = path to the h5 file we want to modify
+        new_h5_file (string) = path to the new h5 file we want to create
+        ratio (list of floats) = test:train:validation ratio as a list 
 
     Overview:
         1. Calculates the difference between the target number of slices and the current number of slices for each group
@@ -235,25 +257,27 @@ def move_h5_data(h5_file, new_h5_file, ratio):
         2. Adding data to 2 groups from 1 group
         3. Adding data from 1 group to 1 group (one group unchanged)
 
-        1. Copy the group/s we're adding to from the old h5 file to the new h5 file
-        2. Loop through the groups we're taking data from
-            -Get all the data for all slices from a single patient(starting from the end)
-            -Track the index of the first slice of that patient (this becomes our new index for the group we're taking data from)
-            -Add the data to the group we're adding to in the new h5 file
-            -Update the new number of slices for this group
-            -If current group reaches the target number of slices, copy the data from this group (only up until the end index) to
+        Steps:
+        First case (Taking data from 2 groups and adding to 1 group)
+        1. Copy the group we're adding data to from the old h5 file to the new h5 file
+        2. Loop through the patients in the groups we're taking data from
+            a.Get all the data for all slices from a single patient(starting from the end)
+            b.Track the index of the first slice of that patient in the old h5 file (this becomes our new index for the group we're taking data from)
+            c.Add the data to the group we're adding to, to the new h5 file
+            d.Update the number of slices for this group
+            e.If current group reaches the target number of slices, copy the data from this group (only up until the end index (see 2b)) to
             to the new h5 file
-            -Move on to the next group
+            f.Move on to the next group
 
         Second case(Adding data to 2 groups from 1 group):
         Difference from the first case: 
-        -copies from both of the groups we're adding data to to the new h5 file
+        -copies from both of the groups we're adding data to, to the new h5 file
         -loops through the groups we're adding data to instead of group we're taking data from
         -Once all target number of slices met, we copy data from the group we're getting data from (only up until the end index)
 
         Third case (Adding data to 1 group from one group):
         Difference from the first case:
-        -copies the data from unchanged group, and group we're adding to to the new h5 file
+        -copies the data from unchanged group, and group we're adding to, to the new h5 file
         -no loops
     '''
 
@@ -371,23 +395,23 @@ def move_h5_data(h5_file, new_h5_file, ratio):
 if __name__ == "__main__":
     '''
     Things to modify:
-    input_dir = where the old h5 file you want to modify is located
-    h5_filename = filename of you h5 file
+    input_dir (string) = where the old h5 file you want to modify is located
+    h5_filename (string) = filename of you h5 file
 
-    output_dir = where you want the new h5 file to be stored
-    new_h5_filename = what you want the new h5 file to be called (must be a different name from the old one)
+    output_dir (string) = where you want the new h5 file to be stored
+    new_h5_filename (string) = what you want the new h5 file to be called (must be a different name from the old one)
 
-    ratio = how you want your data to be divided (must be equal to 1) [test, train, validation]
+    ratio (list of float) = how you want your data to be divided (must be equal to 1) [test, train, validation]
 
-    del_old = if you want to delete the old h5 file
+    del_old (True or False, Boolean) = if you want to delete the old h5 file
     '''
     # specify where the h5 file is located
-    input_dir = "C:\\Users\\arad572\\Documents\\Summer Research\\Summer Research Code\\prepare_data\\h5_files"
-    h5_filename = "UK_Biobank.h5"   #specify the filename
+    input_dir = "C:\\Users\\arad572\\Documents\\Summer Research\\Summer Research Data\\h5_files"
+    h5_filename = "UK_Biobank_50cases.h5"   #specify the filename
     h5_file = os.path.join(input_dir, h5_filename) 
 
     # specify where you want to put the new h5 file
-    output_dir = "F:\\cine-machine-learning\\dataset"
+    output_dir = "C:\\Users\\arad572\\Documents\\Summer Research\\Summer Research Data\\h5_files"
     #output_dir = "C:\\Users\\arad572\\Documents\\Summer Research\\Summer Research Code\\prepare_data\\h5_files"
     new_h5_filename = "{}_new.h5".format(h5_filename.replace(".h5", ""))   #specify the new filename
     new_h5_file = os.path.join(output_dir, new_h5_filename)
@@ -396,7 +420,7 @@ if __name__ == "__main__":
     ratio = [0.2, 0.6, 0.2]
 
     # change to False if you don't want to keep the old h5 file
-    del_old = False
+    del_old = True
 
     if h5_file == new_h5_file:
         print("Please specify a different output filename/path")

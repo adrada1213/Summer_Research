@@ -83,10 +83,14 @@ def get_global_landmarks(cim_path, slice_num):
     Output:
         global_landmarks (3x168 list) = 3D coordinates of the landmarks 
     '''
+    
+    #model_path = os.path.join(cim_path, "model_{}".format(os.path.basename(cim_path)), "series_1_slice_{}".format(slice_num+1))
+    # get the model folder
+    model_folder = [d for d in os.listdir(cim_path) if ("model" in d and "IFFD" not in d)][0]
     # get the path containing the strain.dat files
-    model_path = os.path.join(cim_path, "model_{}".format(os.path.basename(cim_path)), "series_1_slice_{}".format(slice_num+1))
+    model_path = os.path.join(cim_path, model_folder, "series_1_slice_{}".format(slice_num+1))
 
-    #way check if there is a strain file (contains landmarks), if there's none, there will be an error so make sure to catch it using try, except
+    #way check if there is a strain file (contains landmarks), if there's none, there will be an error so make sure to catch it using "try, except" when using this function
     _ = [d for d in os.listdir(model_path) if d.endswith("_strain.dat")][0] 
 
     # initialise the list that will contain the 3D landmarks
